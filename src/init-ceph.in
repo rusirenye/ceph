@@ -4,7 +4,7 @@
 
 ### BEGIN INIT INFO
 # Provides:          ceph
-# Default-Start:     3 5
+# Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Required-Start:    $remote_fs $named $network $time
 # Required-Stop:     $remote_fs $named $network $time
@@ -148,19 +148,11 @@ case $1 in
     --btrfs | --fsmount)
 	    dofsmount=1
 	    ;;
-    --xfs)
-	    doxfs=1
-	    dobtrfs=0
-	    ;;
     --nobtrfs | --nofsmount)
 	    dofsmount=0
 	    ;;
     --btrfsumount | --fsumount)
 	    dofsumount=1
-	    ;;
-    --xfsumount)
-	    doxfsumount=1
-	    dobtrfsumount=0
 	    ;;
     --conf | -c)
 	    [ -z "$2" ] && usage_exit
