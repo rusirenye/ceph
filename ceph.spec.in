@@ -9,13 +9,13 @@
 # common
 #################################################################################
 Name:		ceph
-Version:	@VERSION@
-Release:	@RPM_RELEASE@%{?dist}
+Version:	latest_suse+git.2235aa9
+Release:	0%{?dist}
 Summary:	User space components of the Ceph file system
 License:	GPL-2.0
 Group:		System Environment/Base
 URL:		http://ceph.com/
-Source0:	http://ceph.com/download/%{name}-%{version}.tar.bz2
+Source0:	http://ceph.com/download/%{name}-%{version}.tar.xz
 %if 0%{?fedora} || 0%{?centos} || 0%{?rhel}
 Patch0:		init-ceph.in-fedora.patch
 %endif
@@ -37,7 +37,7 @@ BuildRequires:	make
 BuildRequires:	gcc-c++
 BuildRequires:	libtool
 BuildRequires:	boost-devel
-BuildRequires:  bzip2-devel
+BuildRequires:  libbz2-devel
 BuildRequires:	libedit-devel
 BuildRequires:	perl
 BuildRequires:	gdbm
@@ -45,6 +45,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	python
 BuildRequires:	python-nose
 BuildRequires:	python-argparse
+BuildRequires:  snappy-devel
 BuildRequires:	libaio-devel
 BuildRequires:	libcurl-devel
 BuildRequires:	libxml2-devel
@@ -301,10 +302,6 @@ former ceph-libs package, which is now split up into these three subpackages.
 Packages still depending on ceph-libs should be fixed to depend on librados2,
 librbd1 or libcephfs1 instead.
 
-%if 0%{?opensuse} || 0%{?suse_version}
-%debug_package
-%endif
-
 #################################################################################
 # common
 #################################################################################
@@ -401,12 +398,6 @@ mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/mds
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/bootstrap-osd
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/bootstrap-mds
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/radosgw
-
-%if %{defined suse_version}
-# Fedora seems to have some problems with this macro, use it only on SUSE
-%fdupes -s $RPM_BUILD_ROOT/%{python_sitelib}
-%fdupes %buildroot
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
