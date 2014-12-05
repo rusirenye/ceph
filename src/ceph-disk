@@ -956,7 +956,7 @@ def prepare_journal_dev(
         # we're sharing the disk between osd data and journal;
         # make journal be partition number 2, so it's pretty
         num = 2
-        journal_part = '{num}:0:{size}M'.format(
+        journal_part = '{num}:0:+{size}M'.format(
             num=num,
             size=journal_size,
             )
