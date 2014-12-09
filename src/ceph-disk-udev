@@ -24,6 +24,10 @@ ln -sf ../../${NAME} /dev/disk/by-partuuid/$ID_PART_ENTRY_UUID
 mkdir -p /dev/disk/by-parttypeuuid
 ln -sf ../../${NAME} /dev/disk/by-parttypeuuid/${ID_PART_ENTRY_TYPE}.${ID_PART_ENTRY_UUID}
 
+# Quick fix to see if this helps.
+
+exit 0
+
 case $ID_PART_ENTRY_TYPE in
 
 45b0969e-9b03-4f30-b4c6-b4b80ceff106)
