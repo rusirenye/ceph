@@ -1,12 +1,11 @@
 -------------------------------------------------------------------
 Wed Feb 11 18:23:02 UTC 2015 - osynge@suse.com
 
-- ceph-disk Added support for multple cluster names with systemd
+- ceph-disk Added support for multiple cluster names with systemd
   * added Support-ceph-cluster-names-with-sys.patch
-  * Allows changes in ceph-deploy to Fix 915567
+  * Allows changes in ceph-deploy to fix bnc#915567
 
 -------------------------------------------------------------------
-
 Mon Feb  9 01:38:05 UTC 2015 - tserong@suse.com
 
 - Only use %service macros with ceph.target, not individual parameterized
