@@ -134,6 +134,7 @@ Patch0025:      0025-rgw-swift-GET-HEAD-object-returns-X.patch
 Patch0026:      0026-Changed-prestart-script-path.patch
 Patch0027:      0027-New-rich-init-system-detection.patch
 Patch0028:      0028-Use-sysV-init-script-directly.patch
+Patch0029:      0029-Support-ceph-cluster-names-with-sys.patch
 # Please do not add patches manually here, run update_git.sh.
 
 #################################################################################
@@ -399,6 +400,7 @@ This package contains Ceph benchmarks and test tools.
 %patch0026 -p1
 %patch0027 -p1
 %patch0028 -p1
+%patch0029 -p1
 
 %build
 

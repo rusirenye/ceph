@@ -1,0 +1,43 @@
+From: Owen Synge <osynge@suse.com>
+Date: Wed, 11 Feb 2015 18:18:05 +0100
+Subject: [PATCH] Support ceph cluster names with systemd
+
+Systemd unit files could only ever support one cluster name due
+to not supporting dynamically gathered variables. For this reason
+we support multiple systemd units for different cluster names.
+
+Signed-off-by: Owen Synge <osynge@suse.com>
+---
+ src/ceph-disk | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/src/ceph-disk b/src/ceph-disk
+index 5c7959f..a1511ba 100755
+--- a/src/ceph-disk
++++ b/src/ceph-disk
+@@ -1872,18 +1872,23 @@ def start_daemon(
+                     ],
+                 )
+         elif os.path.exists(os.path.join(path, 'systemd')):
++            cname = ""
++            if cluster != "ceph":
++                cname = "%s-" % (cluster)
+             command_check_call(
+                 [
+                     'systemctl',
+                     'enable',
+-                    'ceph-osd@{osd_id}'.format(osd_id=osd_id),
++                    'ceph-{cname}osd@{osd_id}'.format(osd_id=osd_id,
++                        cname=cname),
+                     ],
+                 )
+             command_check_call(
+                 [
+                     'systemctl',
+                     'start',
+-                    'ceph-osd@{osd_id}'.format(osd_id=osd_id),
++                    'ceph-{cname}osd@{osd_id}'.format(osd_id=osd_id,
++                        cname=cname),
+                     ],
+                 )
+         else:
