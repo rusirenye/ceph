@@ -212,7 +212,6 @@ FUSE based client for Ceph distributed network file system
 Summary:        Ceph headers
 License:        GPL-2.0 and LGPL-2.1
 Group:          Development/Libraries/C and C++
-Requires:       %{name} = %{version}-%{release}
 Requires:       libcephfs1 = %{version}-%{release}
 %if 0%{?cephfs_java}
 Requires:       libcephfs_jni1 = %{version}-%{release}

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Feb 19 08:55:23 UTC 2015 - lmb@suse.com
+
+- ceph-devel should not pull in the full ceph package
+
+-------------------------------------------------------------------
 Wed Feb 11 18:23:02 UTC 2015 - osynge@suse.com
 
 - ceph-disk Added support for multiple cluster names with systemd
