@@ -426,7 +426,9 @@ export RPM_OPT_FLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/i386/i486/'`
                 --with-radosgw \
                 --with-nss \
                 --with-rest-bench \
+%if 0%{?_build_create_debug}
                 --with-debug=yes \
+%endif
 %if 0%{?cephfs_java}
                 --enable-cephfs-java \
 %endif
