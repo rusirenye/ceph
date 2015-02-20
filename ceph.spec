@@ -626,8 +626,10 @@ fi
 %{_bindir}/ceph_filestore_dump
 %{_bindir}/ceph_filestore_tool
 %{_bindir}/librados-config
+%if 0%{?_build_create_debug}
 %{_bindir}/ceph-monstore-tool
 %{_bindir}/ceph-osdomap-tool
+%endif
 %{_bindir}/ceph_mon_store_converter
 /sbin/mkcephfs
 /sbin/mount.ceph
