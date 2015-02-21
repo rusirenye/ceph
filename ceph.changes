@@ -1,15 +1,4 @@
 -------------------------------------------------------------------
-Fri Feb 20 15:50:52 UTC 2015 - lmb@suse.com
-
-- ceph-monstore-tool and ceph-osdomap-tool are disabled if not building
-  with debug enabled.
-
--------------------------------------------------------------------
-Thu Feb 19 22:58:41 UTC 2015 - tbehrens@suse.com
-
-- make building with debug symbols optional 
-
--------------------------------------------------------------------
 Thu Feb 19 08:55:23 UTC 2015 - lmb@suse.com
 
 - ceph-devel should not pull in the full ceph package
