@@ -665,12 +665,10 @@ fi
 %if 0%{?suse_version} >= 1310
 %dir /usr/lib/udev
 %dir /usr/lib/udev/rules.d
-/usr/lib/udev/rules.d/50-rbd.rules
 /usr/lib/udev/rules.d/95-ceph-osd.rules
 %else
 %dir /lib/udev
 %dir /lib/udev/rules.d
-/lib/udev/rules.d/50-rbd.rules
 /lib/udev/rules.d/95-ceph-osd.rules
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/ceph
@@ -722,6 +720,15 @@ fi
 %config %{_sysconfdir}/bash_completion.d/ceph
 %config %{_sysconfdir}/bash_completion.d/rados
 %config %{_sysconfdir}/bash_completion.d/rbd
+%if 0%{?suse_version} >= 1310
+%dir /usr/lib/udev
+%dir /usr/lib/udev/rules.d
+/usr/lib/udev/rules.d/50-rbd.rules
+%else
+%dir /lib/udev
+%dir /lib/udev/rules.d
+/lib/udev/rules.d/50-rbd.rules
+%endif
 
 #################################################################################
 %files fuse
