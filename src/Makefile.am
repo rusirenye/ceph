@@ -176,8 +176,8 @@ base: core-daemons admin-tools \
 # version stuff
 
 FORCE:
-.git_version: FORCE
-	$(srcdir)/make_version -g $(srcdir)/.git_version
+.git_version: .github_version FORCE
+	$(srcdir)/make_version -g $(srcdir)/.git_version -x $(srcdir)/.github_version
 
 # if NO_VERSION is set, only generate a new ceph_ver.h if there currently 
 # is none, and call "make_version -n" to fill it with a fixed string.

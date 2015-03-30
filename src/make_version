@@ -1,14 +1,13 @@
 #!/bin/sh
 
 GIT_VERSION_FILE=
+GITHUB_VERSION_FILE=
 CEPH_VER_HEADER=
 NO_VERSION=0
 
 is_git() {
-    type git > /dev/null 2>&1 || { echo "Could not find git command. Please install. Aborting."; exit 1; }
     git status > /dev/zero 2>&1;
     if [ $? -ne 0 ]; then
-        echo "This is no git repository, not updating .git_version"
         return 1
     else
         return 0
@@ -18,6 +17,12 @@ is_git() {
 check_gitversion() {
     if is_git; then
         current=`git rev-parse HEAD 2> /dev/null; git describe 2> /dev/null`
+    elif test -f "$GITHUB_VERSION_FILE" && grep -vq 'Format:' "$GITHUB_VERSION_FILE" ; then
+        current=`head -1 $GITHUB_VERSION_FILE; \
+                 sed -ne '/(.*)/ s/.*tag: \([v\.0-9]*\).*/\1/p' $GITHUB_VERSION_FILE`
+	fi
+
+	if [ -n "$current" ] ; then
         if [ -f $GIT_VERSION_FILE ] ; then
             old=`cat $GIT_VERSION_FILE`
 
@@ -27,6 +32,8 @@ check_gitversion() {
         else
             echo "$current" > $GIT_VERSION_FILE
         fi
+	else
+        echo "Cannot determine source revision, not updating .git_version"
     fi
 }
 
@@ -69,6 +76,7 @@ set_ceph_ver() {
 usage() {
     printf "usage: $0 -g FILEPATH [options]\n"
     printf "\t-g|--git-version-file\tFILEPATH for git version file (e.g. ./src/.git_version)\n"
+    printf "\t-x|--github-version-file\tFILEPATH for github version file (e.g. ./src/.github_version)\n"
     printf "\t-c|--ceph-ver-header\tFILEPATH for ceph version header (e.g. ./src/ceph_ver.h)\n"
     printf "\t-n|--no-version\t\tdon't generate version from git\n"
     printf "\t-h|--help\t\tprint this usage instructions\n"
@@ -81,6 +89,10 @@ case $1 in
         ;;
     -g|--git-version-file)
         GIT_VERSION_FILE=$2
+        shift;
+        ;;
+    -x|--github-version-file)
+        GITHUB_VERSION_FILE=$2
         shift;
         ;;
     -c|--ceph-ver-header)
