@@ -527,6 +527,12 @@ install -m 0755 -D src/ceph-radosgw-prestart.sh $RPM_BUILD_ROOT/usr/lib/ceph-rad
 install -m 0755 -D systemd/ceph %{buildroot}/%{_sbindir}/rcceph
 mkdir -p $RPM_BUILD_ROOT/srv/www/radosgw
 
+# firewall templates
+%if 0%{?suse_version}
+install -m 0644 -D src/susefirewall-ceph-mon %{buildroot}%{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-mon
+install -m 0644 -D src/susefirewall-ceph-osd-mds %{buildroot}%{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds
+%endif
+
 # udev rules
 %if 0%{?rhel} >= 7 || 0%{?fedora} || 0%{?suse_version}
 install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/50-rbd.rules
@@ -674,6 +680,10 @@ fi
 %endif
 %config %{_sysconfdir}/bash_completion.d/ceph
 %config(noreplace) %{_sysconfdir}/logrotate.d/ceph
+%if 0%{?suse_version}
+%config %{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-mon
+%config %{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds
+%endif
 %{_mandir}/man8/ceph-deploy.8*
 %{_mandir}/man8/ceph-disk.8*
 %{_mandir}/man8/ceph-mon.8*
