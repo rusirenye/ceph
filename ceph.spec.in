@@ -59,6 +59,12 @@ BuildRequires: sharutils
 BuildRequires:	gcc-c++
 BuildRequires:	git
 BuildRequires:	boost-devel
+%if 0%{defined suse_version}
+BuildRequires:  libbz2-devel
+%else
+BuildRequires:  bzip2-devel
+%endif
+BuildRequires:	git
 BuildRequires:	cryptsetup
 BuildRequires:	gdbm
 BuildRequires:	hdparm
