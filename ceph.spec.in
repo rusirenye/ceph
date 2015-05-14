@@ -58,7 +58,9 @@ BuildRequires: sharutils
 %endif
 BuildRequires:	gcc-c++
 BuildRequires:	boost-devel
-%if ! 0%{defined suse_version}
+%if 0%{defined suse_version}
+BuildRequires:  libbz2-devel
+%else
 BuildRequires:  bzip2-devel
 %endif
 BuildRequires:	cryptsetup
