@@ -535,7 +535,7 @@ install -m 0644 -D etc/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds %{buildro
 %endif
 
 # udev rules
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} >= 7 || 0%{?fedora} || 0%{?suse_version}
 install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/50-rbd.rules
 install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 %else
@@ -549,7 +549,7 @@ install -m 0644 -D udev/95-ceph-osd-alt.rules $RPM_BUILD_ROOT/lib/udev/rules.d/9
 install -m 0644 -D udev/95-ceph-osd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
 %endif
 
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} >= 7 || 0%{?fedora} || 0%{?suse_version}
 mv $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/95-ceph-osd.rules
 mv $RPM_BUILD_ROOT/sbin/mount.ceph $RPM_BUILD_ROOT/usr/sbin/mount.ceph
 mv $RPM_BUILD_ROOT/sbin/mount.fuse.ceph $RPM_BUILD_ROOT/usr/sbin/mount.fuse.ceph
@@ -745,6 +745,12 @@ mkdir -p %{_localstatedir}/run/ceph/
 %dir %{_localstatedir}/lib/ceph/bootstrap-mds
 %dir %{_localstatedir}/lib/ceph/bootstrap-rgw
 %dir %{_localstatedir}/run/ceph/
+%if 0%{?suse_version}
+%dir %{_tmpfilesdir}/
+%{_tmpfilesdir}/%{name}.conf
+%else
+%ghost %dir %{_localstatedir}/run/ceph/
+%endif
 
 #################################################################################
 %files -n ceph-common
@@ -780,7 +786,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_initrddir}/rbdmap
 %{python_sitelib}/ceph_argparse.py*
 %{python_sitelib}/ceph_daemon.py*
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} >= 7 || 0%{?fedora} || 0%{?suse_version}
 /usr/lib/udev/rules.d/50-rbd.rules
 %else
 /lib/udev/rules.d/50-rbd.rules
