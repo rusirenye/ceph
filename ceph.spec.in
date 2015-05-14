@@ -55,6 +55,7 @@ BuildRequires:	boost-devel
 %if ! 0%{defined suse_version}
 BuildRequires:  bzip2-devel
 %endif
+BuildRequires:	git
 BuildRequires:	cryptsetup
 BuildRequires:	gdbm
 BuildRequires:	hdparm
