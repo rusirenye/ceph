@@ -491,9 +491,6 @@ make -j$(getconf _NPROCESSORS_ONLN)
 make DESTDIR=$RPM_BUILD_ROOT install
 find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name "*.a" -exec rm -f {} ';'
-install -D src/init-ceph $RPM_BUILD_ROOT%{_initrddir}/ceph
-install -D src/init-radosgw.sysv $RPM_BUILD_ROOT%{_initrddir}/ceph-radosgw
-install -D src/init-rbdmap $RPM_BUILD_ROOT%{_initrddir}/rbdmap
 install -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
 %if 0%{?_with_systemd}
   mkdir -p $RPM_BUILD_ROOT%{_unitdir}
