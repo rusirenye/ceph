@@ -795,11 +795,6 @@ mkdir -p %{_localstatedir}/run/ceph/
 %config %{_sysconfdir}/bash_completion.d/rados
 %config %{_sysconfdir}/bash_completion.d/rbd
 %config(noreplace) %{_sysconfdir}/ceph/rbdmap
-%if 0%{?_with_systemd}
-echo "Has systemd"
-%else
-%{_initrddir}/rbdmap
-%endif
 %{python_sitelib}/ceph_argparse.py*
 %{python_sitelib}/ceph_daemon.py*
 %if 0%{?rhel} >= 7 || 0%{?fedora}
