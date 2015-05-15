@@ -853,6 +853,7 @@ fi
       /usr/bin/systemctl stop $SERVICE > /dev/null 2>&1 || :
     done
   fi
+  %endif
 %endif
 
 %postun radosgw
