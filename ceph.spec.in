@@ -117,7 +117,7 @@ BuildRequires:	snappy-devel
 # distro-conditional dependencies
 #################################################################################
 
-%if ! 0%{?rhel} || 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} || 0%{?centos}
 BuildRequires:	sharutils
 Requires:	gdisk
 BuildRequires:	nss-devel
@@ -136,6 +136,7 @@ BuildRequires:	net-tools
 BuildRequires:	libbz2-devel
 BuildRequires:	sharutils
 BuildRequires:	git
+
 %if 0%{?opensuse} || 0%{?suse_version}
 %if 0%{?_with_systemd}
 Requires:	gptfdisk
