@@ -802,7 +802,7 @@ echo "Has systemd"
 %endif
 %{python_sitelib}/ceph_argparse.py*
 %{python_sitelib}/ceph_daemon.py*
-%if 0%{?rhel} >= 7 || 0%{?fedora} || 0%{?suse_version}
+%if 0%{?rhel} >= 7 || 0%{?fedora}
 /usr/lib/udev/rules.d/50-rbd.rules
 %endif
 %if 0%{?opensuse} || 0%{?suse_version}
