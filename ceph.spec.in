@@ -515,8 +515,8 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name "*.a" -exec rm -f {} ';'
 install -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
 
-install -m 0644 -D doc/start/ceph.conf %{buildroot}/%{_tmpfilesdir}/%{name}.conf
-install -m 0644 -D doc/radosgw/rgw-centos.conf %{buildroot}/%{_tmpfilesdir}/ceph-radosgw.conf
+install -m 0644 -D systemd/tmpfiles.d_ceph.conf %{buildroot}/%{_tmpfilesdir}/%{name}.conf
+install -m 0644 -D systemd/tmpfiles.d_ceph-rgw.conf %{buildroot}/%{_tmpfilesdir}/ceph-radosgw.conf
 
 
 # install log rotate
@@ -763,6 +763,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %if 0%{?suse_version}
 %dir %{_tmpfilesdir}/
 %{_tmpfilesdir}/%{name}.conf
+
 %else
 %ghost %dir %{_localstatedir}/run/ceph/
 %endif
@@ -846,6 +847,7 @@ fi
 %dir %{_localstatedir}/log/radosgw/
 %dir %{_localstatedir}/lib/ceph/radosgw
 %if 0%{?_with_systemd}
+  %{_tmpfilesdir}/%{name}-radosgw.conf
   %dir %{_tmpfilesdir}/
   %{_unitdir}/ceph-radosgw@.service
   %dir /usr/lib/ceph-radosgw
