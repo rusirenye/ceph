@@ -64,6 +64,8 @@ BuildRequires:	gcc-c++
 BuildRequires:	boost-devel
 %if ! 0%{defined suse_version}
 BuildRequires:  bzip2-devel
+BuildRequires:	python-sphinx
+BuildRequires:	libbz2-devel
 %endif
 BuildRequires:	git
 BuildRequires:	cryptsetup
@@ -88,8 +90,6 @@ BuildRequires:	python-nose
 BuildRequires:	python-requests
 %if ( 0%{?rhel} > 0 && 0%{?rhel} < 7 ) || ( 0%{?centos} > 0 && 0%{?centos} < 7 )
 BuildRequires:	python-sphinx10
-%else
-BuildRequires:	python-sphinx
 %endif
 BuildRequires:	python-virtualenv
 BuildRequires:	util-linux
