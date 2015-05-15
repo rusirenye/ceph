@@ -62,7 +62,7 @@ Requires: systemd
 %endif
 BuildRequires:	gcc-c++
 BuildRequires:	boost-devel
-%if 0%{defined suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 BuildRequires:  libbz2-devel
 BuildRequires:	python-sphinx
 BuildRequires: net-tools
@@ -111,10 +111,19 @@ BuildRequires:	net-tools
 #################################################################################
 %if ! 0%{?rhel} || 0%{?fedora}
 BuildRequires:	sharutils
+Requires:	gdisk
+BuildRequires:	nss-devel
+BuildRequires:	keyutils-libs-devel
+BuildRequires:	libatomic_ops-devel
+Requires:	gdisk
+Requires(post):	chkconfig
+Requires(preun):chkconfig
+Requires(preun):initscripts
+BuildRequires:	gperftools-devel
 %endif
 
-%if 0%{defined suse_version}
-%if 0%{?suse_version} > 1210
+%if 0%{?opensuse} || 0%{?suse_version}
+%if 0%{?_with_systemd}
 Requires:	gptfdisk
 BuildRequires:	gperftools-devel
 %else
@@ -127,15 +136,17 @@ BuildRequires:	mozilla-nss-devel
 BuildRequires:	keyutils-devel
 BuildRequires:	libatomic-ops-devel
 BuildRequires:	fdupes
-%else
+%endif
+
+%if 0%{?fedora} || 0%{?rhel} || 0%{?centos}
 Requires:	gdisk
 BuildRequires:	nss-devel
 BuildRequires:	keyutils-libs-devel
 BuildRequires:	libatomic_ops-devel
 Requires:	gdisk
 Requires(post):	chkconfig
-Requires(preun):chkconfig
-Requires(preun):initscripts
+Requires(preun):	chkconfig
+Requires(preun):	initscripts
 BuildRequires:	gperftools-devel
 %endif
 
@@ -184,11 +195,12 @@ Summary:	Rados REST gateway
 Group:		Development/Libraries
 Requires:	ceph-common = %{epoch}:%{version}-%{release}
 Requires:	librados2 = %{epoch}:%{version}-%{release}
-%if 0%{defined suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 BuildRequires:	libexpat-devel
 BuildRequires:	FastCGI-devel
 Requires:	apache2-mod_fcgid
-%else
+%endif
+%if (0%{?rhel} || 0%{?centos})
 BuildRequires:	expat-devel
 BuildRequires:	fcgi-devel
 %endif
@@ -239,7 +251,7 @@ Group:		System Environment/Libraries
 License:	LGPL-2.0
 Requires:	librados2 = %{epoch}:%{version}-%{release}
 Obsoletes:	python-ceph < %{epoch}:%{version}-%{release}
-%if 0%{defined suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 %py_requires
 %endif
 %description -n python-rados
@@ -547,7 +559,7 @@ chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.ceph.conf
 chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.fetch_config
 
 # firewall templates
-%if 0%{?suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 install -m 0644 -D etc/sysconfig/SuSEfirewall2.d/services/ceph-mon %{buildroot}%{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-mon
 install -m 0644 -D etc/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds %{buildroot}%{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds
 %endif
@@ -556,7 +568,7 @@ install -m 0644 -D etc/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds %{buildro
 %if (0%{?rhel} >= 7 || 0%{?fedora})
 install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/50-rbd.rules
 install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
-%elif %{defined suse_version}
+%elif 0%{?opensuse} || 0%{?suse_version}
 install -m 0644 -D systemd/udev-rules.d-95-ceph-osd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/95-ceph-osd.rules
 %else
 install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/50-rbd.rules
@@ -589,7 +601,7 @@ mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/bootstrap-mds
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/bootstrap-rgw
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/radosgw
 
-%if %{defined suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 # Fedora seems to have some problems with this macro, use it only on SUSE
 %fdupes -s $RPM_BUILD_ROOT/%{python_sitelib}
 %fdupes %buildroot
@@ -650,7 +662,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 
 %postun
 /sbin/ldconfig
-%if %{defined suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 %insserv_cleanup
 %endif
 
