@@ -629,11 +629,9 @@ install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/usr/li
 %elif (0%{?rhel} && 0%{?rhel} < 7)
 install -m 0644 -D udev/95-ceph-osd-alt.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
 %endif
-%elif 0%{?opensuse} || 0%{?suse_version}
+
+%if 0%{?opensuse} || 0%{?suse_version}
 install -m 0644 -D systemd/udev-rules.d-95-ceph-osd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/95-ceph-osd.rules
-%else
-install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/50-rbd.rules
-install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 %endif
 
 #set up placeholder directories
@@ -660,7 +658,7 @@ mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/radosgw
 rm -rf $RPM_BUILD_ROOT
 %pre
 %if 0%{?_with_systemd}
-  %if 0%{?suse_version}
+  %if %if 0%{?opensuse} || 0%{?suse_version}
     # service_add_pre and friends don't work with parameterized systemd service
     # instances, only with single services or targets, so we always pass
     # ceph.target to these macros (this and related comments all pertain to
@@ -674,7 +672,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 %if 0%{?_with_systemd}
   systemd-tmpfiles --create %{_tmpfilesdir}/%{name}.conf
-  %if 0%{?suse_version}
+  %if %if 0%{?opensuse} || 0%{?suse_version}
     %service_add_post ceph.target
   %endif
 %else
@@ -684,7 +682,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 
 %preun
 %if 0%{?_with_systemd}
-  %if 0%{?suse_version}
+  %if 0%{?opensuse} || 0%{?suse_version}
     %stop_on_removal ceph
     %service_del_preun ceph.target
   %endif
