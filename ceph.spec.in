@@ -71,10 +71,7 @@ BuildRequires:	git
 BuildRequires:	boost-devel
 %if 0%{defined suse_version}
 BuildRequires:  libbz2-devel
-%else
-BuildRequires:  bzip2-devel
 BuildRequires:	python-sphinx
-BuildRequires:	libbz2-devel
 %endif
 BuildRequires:	git
 BuildRequires:	cryptsetup
@@ -98,6 +95,7 @@ BuildRequires:	python-nose
 BuildRequires:	python-requests
 %if ( 0%{?rhel} > 0 && 0%{?rhel} < 7 ) || ( 0%{?centos} > 0 && 0%{?centos} < 7 )
 BuildRequires:	python-sphinx10
+BuildRequires:  bzip2-devel
 %endif
 %if 0%{?fedora} || 0%{defined suse_version} || 0%{?rhel} >= 7 || 0%{?centos} >= 7
 BuildRequires:	python-sphinx
