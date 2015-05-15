@@ -72,6 +72,8 @@ BuildRequires:	boost-devel
 %if 0%{defined suse_version}
 BuildRequires:  libbz2-devel
 BuildRequires:	python-sphinx
+BuildRequires: net-tools
+BuildRequires: sharutils
 %endif
 BuildRequires:	git
 BuildRequires:	cryptsetup
