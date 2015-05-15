@@ -73,6 +73,8 @@ BuildRequires:	boost-devel
 BuildRequires:  libbz2-devel
 %else
 BuildRequires:  bzip2-devel
+BuildRequires:	python-sphinx
+BuildRequires:	libbz2-devel
 %endif
 BuildRequires:	git
 BuildRequires:	cryptsetup
