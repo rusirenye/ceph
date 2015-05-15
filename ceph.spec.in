@@ -681,7 +681,6 @@ mkdir -p %{_localstatedir}/run/ceph/
 %preun
 %if 0%{?_with_systemd}
   %if 0%{?opensuse} || 0%{?suse_version}
-    %stop_on_removal ceph
     %service_del_preun ceph.target
   %endif
   # Need a special case here when removing the RPM to disable specific
@@ -699,10 +698,15 @@ mkdir -p %{_localstatedir}/run/ceph/
     done
   fi
 %else
-  if [ $1 = 0 ] ; then
-    /sbin/service ceph stop >/dev/null 2>&1
-    /sbin/chkconfig --del ceph
-  fi
+  %if 0%{?opensuse} || 0%{?suse_version}
+    %stop_on_removal ceph
+  %endif
+  %if 0%{?rhel} >= 7 || 0%{?fedora}
+    if [ $1 = 0 ] ; then
+      /sbin/service ceph stop >/dev/null 2>&1
+      /sbin/chkconfig --del ceph
+    fi
+  %endif
 %endif
 
 %postun
@@ -934,9 +938,6 @@ fi
 
 %preun radosgw
 %if 0%{?_with_systemd}
-  %if 0%{?suse_version}
-    %stop_on_removal ceph-radosgw
-  %endif
   SERVICE_LIST=$(systemctl | grep -E '^ceph-radosgw@'  | cut -d' ' -f1)
   if [ -n "$SERVICE_LIST" ]; then
     for SERVICE in $SERVICE_LIST; do
@@ -946,14 +947,15 @@ fi
       /usr/bin/systemctl stop $SERVICE > /dev/null 2>&1 || :
     done
   fi
+%else
+  %if 0%{?suse_version}
+    %stop_on_removal ceph-radosgw
+  %endif
 %endif
 
 %postun radosgw
 /sbin/ldconfig
 %if 0%{?_with_systemd}
-  %if 0%{?suse_version}
-    %restart_on_update ceph-radosgw
-  %endif
   SERVICE_LIST=$(systemctl | grep -E '^ceph-radosgw@'  | cut -d' ' -f1)
   if [ -n "$SERVICE_LIST" ]; then
     for SERVICE in $SERVICE_LIST; do
@@ -963,12 +965,16 @@ fi
       /usr/bin/systemctl try-restart $SERVICE > /dev/null 2>&1 || :
     done
   fi
-  %insserv_cleanup
+%else
+  %if 0%{?suse_version}
+    %restart_on_update ceph-radosgw
+  %endif
 %endif
 # Package removal cleanup
 if [ "$1" -eq "0" ] ; then
     rm -rf /var/log/radosgw
 fi
+%insserv_cleanup
 #################################################################################
 %if %{with ocf}
 %files resource-agents
