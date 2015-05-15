@@ -1,4 +1,5 @@
 %bcond_with ocf
+
 %bcond_without cephfs_java
 %bcond_with tests
 %bcond_without tcmalloc
