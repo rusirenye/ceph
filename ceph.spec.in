@@ -36,8 +36,13 @@ Summary:	User space components of the Ceph file system
 License:	GPL-2.0
 Group:		System Environment/Base
 URL:		http://ceph.com/
+%if 0%{?fedora} || 0%{?centos} || 0%{?rhel}
 Source0:	http://ceph.com/download/%{name}-%{version}.tar.bz2
-%if 0%{?fedora} || 0%{?rhel}
+Patch0:		init-ceph.in-fedora.patch
+%elif 0%{?suse_version}
+Source0:	http://ceph.com/download/%{name}-%{version}.tar.xz
+%else
+Source0:	http://ceph.com/download/%{name}-%{version}.tar.bz2
 Patch0:		init-ceph.in-fedora.patch
 %endif
 #################################################################################
