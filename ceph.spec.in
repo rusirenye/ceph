@@ -80,7 +80,6 @@ BuildRequires:	libuuid-devel
 BuildRequires:	libblkid-devel >= 2.17
 BuildRequires:	libudev-devel
 BuildRequires:	libtool
-BuildRequires:	leveldb-devel > 1.2
 BuildRequires:	make
 BuildRequires:	perl
 BuildRequires:	parted
@@ -99,11 +98,13 @@ BuildRequires:	xfsprogs
 BuildRequires:	xfsprogs-devel
 BuildRequires:	xmlstarlet
 BuildRequires:	yasm
-%if 0%{?rhel} || 0%{?centos} || 0%{?fedora} || 0%{?suse_version}
 BuildRequires:	snappy-devel
+%if 0%{?rhel} || 0%{?centos} || 0%{?fedora}
+BuildRequires:	leveldb-devel
 %endif
 %if 0%{?suse_version}
 BuildRequires:	net-tools
+BuildRequires:	leveldb-devel > 1.2
 %endif
 
 #################################################################################
