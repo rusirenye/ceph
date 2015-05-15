@@ -96,8 +96,6 @@ BuildRequires:	python-virtualenv
 BuildRequires:	util-linux
 BuildRequires:	xfsprogs
 BuildRequires:	xfsprogs-devel
-BuildRequires:	xmlstarlet
-BuildRequires:	yasm
 BuildRequires:	snappy-devel
 %if 0%{?rhel} || 0%{?centos} || 0%{?fedora}
 BuildRequires:	leveldb-devel
@@ -105,6 +103,8 @@ BuildRequires:	leveldb-devel
 %if 0%{?suse_version}
 BuildRequires:	net-tools
 BuildRequires:	leveldb-devel > 1.2
+BuildRequires:	xmlstarlet
+BuildRequires:	yasm
 %endif
 
 #################################################################################
