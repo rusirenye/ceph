@@ -590,7 +590,7 @@ mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/radosgw
 rm -rf $RPM_BUILD_ROOT
 %pre
 %if 0%{?_with_systemd}
-  %if %if 0%{?opensuse} || 0%{?suse_version}
+  %if 0%{?opensuse} || 0%{?suse_version}
     # service_add_pre and friends don't work with parameterized systemd service
     # instances, only with single services or targets, so we always pass
     # ceph.target to these macros (this and related comments all pertain to
@@ -604,7 +604,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 %if 0%{?_with_systemd}
   systemd-tmpfiles --create %{_tmpfilesdir}/%{name}.conf
-  %if %if 0%{?opensuse} || 0%{?suse_version}
+  %if 0%{?opensuse} || 0%{?suse_version}
     %service_add_post ceph.target
   %endif
 %else
