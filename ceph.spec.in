@@ -659,6 +659,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %defattr(-,root,root,-)
 %docdir %{_docdir}
 %dir %{_docdir}/ceph
+%dir /usr/share/ceph
 %{_docdir}/ceph/sample.ceph.conf
 %{_docdir}/ceph/sample.fetch_config
 %{_bindir}/cephfs
