@@ -194,7 +194,14 @@ Requires:	python-requests
 %if 0%{?fedora} || 0%{?rhel} || 0%{?centos}
 Requires:	redhat-lsb-core
 %endif
+%if 0%{?rhel} || 0%{?fedora}
+Requires:	redhat-lsb-core
+%endif
 %if 0%{defined suse_version}
+Requires:	lsb
+%endif
+
+%if 0%{?opensuse} || 0%{?suse_version}
 Requires:	lsb-release
 %endif
 # python-argparse is only needed in distros with Python 2.6 or lower
