@@ -719,6 +719,13 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_libdir}/rados-classes/libcls_version.so*
 %dir %{_libdir}/ceph/erasure-code
 %{_libdir}/ceph/erasure-code/libec_*.so*
+
+%if 0%{?debian}
+/lib/udev/rules.d/50-rbd.rules
+%endif
+%if 0%{?rhel} >= 7 || 0%{?fedora}
+/usr/lib/udev/rules.d/50-rbd.rules
+%endif
 %if 0%{?rhel} >= 7 || 0%{?fedora}
 /usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 /usr/lib/udev/rules.d/95-ceph-osd.rules
@@ -801,15 +808,6 @@ mkdir -p %{_localstatedir}/run/ceph/
 %config(noreplace) %{_sysconfdir}/ceph/rbdmap
 %{python_sitelib}/ceph_argparse.py*
 %{python_sitelib}/ceph_daemon.py*
-%if 0%{?rhel} >= 7 || 0%{?fedora}
-/usr/lib/udev/rules.d/50-rbd.rules
-%endif
-%if 0%{?opensuse} || 0%{?suse_version}
-/usr/lib/udev/rules.d/95-ceph-osd.rules
-%endif
-%if 0%{?debian}
-/lib/udev/rules.d/50-rbd.rules
-%endif
 
 %postun -n ceph-common
 # Package removal cleanup
