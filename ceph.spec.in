@@ -163,7 +163,7 @@ Requires:	python-requests
 Requires:	redhat-lsb-core
 %endif
 %if 0%{?opensuse} || 0%{?suse_version}
-Requires:	lsb
+Requires:	lsb-release
 %endif
 %description -n ceph-common
 Common utilities to mount and interact with a ceph storage cluster.
