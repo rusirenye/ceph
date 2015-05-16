@@ -2,7 +2,7 @@
 %bcond_with cephfs_java
 
 # suse OBS build hosts are memory-limited
-%if 0%{?suse_version}
+%if 0%{?suse_version} || 0%{?opensuse}
  %if 0%{?jobs} > 6
   %define jobs 6
  %endif
@@ -20,7 +20,7 @@
 # the _with_systemd variable only implies that we'll install
 # /etc/tmpfiles.d/ceph.conf in order to set up the socket directory in
 # /var/run/ceph.
-%if 0%{?fedora} || 0%{?rhel} >= 7 || 0%{?suse_version}
+%if 0%{?fedora} || 0%{?rhel} >= 7 || 0%{?suse_version} || 0%{?opensuse}
   %global _with_systemd 1
 %endif
 
@@ -740,7 +740,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %endif
 %config %{_sysconfdir}/bash_completion.d/ceph
 %config(noreplace) %{_sysconfdir}/logrotate.d/ceph
-%if 0%{?suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 %config %{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-mon
 %config %{_sysconfdir}/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds
 %endif
@@ -772,7 +772,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %dir %{_localstatedir}/lib/ceph/bootstrap-mds
 %dir %{_localstatedir}/lib/ceph/bootstrap-rgw
 %dir %{_localstatedir}/run/ceph/
-%if 0%{?suse_version}
+%if 0%{?opensuse} || 0%{?suse_version}
 %dir %{_tmpfilesdir}/
 %{_tmpfilesdir}/%{name}.conf
 
@@ -870,7 +870,7 @@ fi
   # isn't applicable in this context (see above comment).
   /usr/bin/systemctl daemon-reload >/dev/null 2>&1 || :
 %else
-  %if 0%{?suse_version}
+  %if 0%{?suse_version} || 0%{?opensuse}
     %fillup_and_insserv -f -y ceph-radosgw
   %endif
 %endif
@@ -887,7 +887,7 @@ fi
     done
   fi
 %else
-  %if 0%{?suse_version}
+  %if 0%{?suse_version} || 0%{?opensuse}
     %stop_on_removal ceph-radosgw
   %endif
 %endif
@@ -905,7 +905,7 @@ fi
     done
   fi
 %else
-  %if 0%{?suse_version}
+  %if 0%{?suse_version} || 0%{?opensuse}
     %restart_on_update ceph-radosgw
   %endif
 %endif
