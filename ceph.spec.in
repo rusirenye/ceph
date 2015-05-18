@@ -238,7 +238,7 @@ BuildRequires:	FastCGI-devel
 Requires:	apache2-mod_fcgid
 %endif
 
-%if (0%{?rhel} || 0%{?centos})
+%if (0%{?rhel} || 0%{?centos} || 0%{?fedora})
 BuildRequires:	expat-devel
 BuildRequires:	fcgi-devel
 %endif
