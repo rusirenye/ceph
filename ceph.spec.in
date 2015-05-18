@@ -36,9 +36,6 @@ License:	GPL-2.0
 Group:		System Environment/Base
 URL:		http://ceph.com/
 Source0:	http://ceph.com/download/%{name}-%{version}.tar.xz
-%if 0%{?fedora} || 0%{?centos} || 0%{?rhel}
-Patch0:		init-ceph.in-fedora.patch
-%endif
 Requires:	librbd1 = %{epoch}:%{version}-%{release}
 Requires:	librados2 = %{epoch}:%{version}-%{release}
 Requires:	libcephfs1 = %{epoch}:%{version}-%{release}
@@ -469,9 +466,6 @@ python-cephfs instead.
 #################################################################################
 %prep
 %setup -q
-%if 0%{?fedora} || 0%{?rhel} || 0%{?centos}
-%patch0 -p1 -b .init
-%endif
 
 %build
 # Find jni.h
