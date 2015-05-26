@@ -484,6 +484,12 @@ done
 		--prefix=/usr \
 		--localstatedir=/var \
 		--sysconfdir=/etc \
+%if 0%{?rhel} || 0%{?fedora}
+		--with-systemd-libexec-dir=/usr/lib/systemd/system \
+%endif
+%if 0%{?opensuse} || 0%{?suse_version}
+		--with-systemd-unit-dir=%_unitdir \
+%endif
 		--docdir=%{_docdir}/ceph \
 		--mandir="%_mandir" \
 		--with-nss \
