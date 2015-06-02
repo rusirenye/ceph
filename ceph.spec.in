@@ -673,7 +673,6 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_bindir}/ceph-mds
 %{_bindir}/ceph-objectstore-tool
 %{_bindir}/ceph-osd
-%{_bindir}/ceph-detect-init
 %{_bindir}/librados-config
 %{_bindir}/ceph-client-debug
 %{_bindir}/cephfs-journal-tool
@@ -740,7 +739,6 @@ mkdir -p %{_localstatedir}/run/ceph/
 %endif
 %{python_sitelib}/ceph_detect_init*
 %{_mandir}/man8/ceph-deploy.8*
-%{_mandir}/man8/ceph-detect-init.8*
 %{_mandir}/man8/ceph-disk.8*
 %{_mandir}/man8/ceph-create-keys.8*
 %{_mandir}/man8/ceph-mon.8*
