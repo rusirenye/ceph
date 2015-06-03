@@ -803,7 +803,6 @@ mkdir -p %{_localstatedir}/run/ceph/
 %config %{_sysconfdir}/bash_completion.d/rbd
 %config(noreplace) %{_sysconfdir}/ceph/rbdmap
 %{python_sitelib}/ceph_argparse.py*
-%{python_sitelib}/ceph_daemon.py*
 
 %postun -n ceph-common
 # Package removal cleanup
