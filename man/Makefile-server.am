@@ -1,5 +1,6 @@
 dist_man_MANS += \
 	ceph-deploy.8 \
+        ceph-create-keys.8 \
 	crushtool.8 \
 	ceph-run.8 \
 	mount.ceph.8 \
