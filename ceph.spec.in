@@ -541,7 +541,7 @@ install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotat
   install -D src/init-ceph $RPM_BUILD_ROOT%{_initrddir}/ceph
   install -D src/init-radosgw $RPM_BUILD_ROOT%{_initrddir}/ceph-radosgw
   install -D src/init-rbdmap $RPM_BUILD_ROOT%{_initrddir}/rbdmap
-  install -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
+  install -m 0644 -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
   mkdir -p $RPM_BUILD_ROOT/%{_sbindir}
   ln -sf ../../etc/init.d/ceph %{buildroot}/%{_sbindir}/rcceph
   ln -sf ../../etc/init.d/ceph-radosgw %{buildroot}/%{_sbindir}/rcceph-radosgw
