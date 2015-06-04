@@ -592,17 +592,16 @@ mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/radosgw
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
 %pre
 %if 0%{?_with_systemd}
   %if 0%{?suse_version}
     # service_add_pre and friends don't work with parameterized systemd service
     # instances, only with single services or targets, so we always pass
-    # ceph.target to these macros (this and related comments all pertain to
-    # bnc#916499)
+    # ceph.target to these macros
     %service_add_pre ceph.target
   %endif
 %endif
-
 
 %post
 /sbin/ldconfig
@@ -639,7 +638,7 @@ mkdir -p %{_localstatedir}/run/ceph/
   %if 0%{?suse_version}
     %stop_on_removal ceph
   %endif
-  %if 0%{?rhel} >= 7 || 0%{?fedora}
+  %if 0%{?rhel} || 0%{?fedora}
     if [ $1 = 0 ] ; then
       /sbin/service ceph stop >/dev/null 2>&1
       /sbin/chkconfig --del ceph
@@ -909,10 +908,13 @@ fi
   %endif
 %endif
 # Package removal cleanup
-if [ "$1" -eq "0" ] ; then
-    rm -rf /var/log/radosgw
+if [ "$1" = "0" ] ; then
+  rm -rf /var/log/radosgw
 fi
-%insserv_cleanup
+%if 0%{?suse_version}
+  %insserv_cleanup
+%endif
+
 #################################################################################
 %if %{with ocf}
 %files resource-agents
