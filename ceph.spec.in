@@ -610,6 +610,10 @@ mv $RPM_BUILD_ROOT/sbin/mount.ceph $RPM_BUILD_ROOT/usr/sbin/mount.ceph
 mv $RPM_BUILD_ROOT/sbin/mount.fuse.ceph $RPM_BUILD_ROOT/usr/sbin/mount.fuse.ceph
 %endif
 
+%if 0%{defined suse_version}
+install -m 0644 -D udev/95-ceph-osd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
+%endif
+
 #set up placeholder directories
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ceph
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/run/ceph
