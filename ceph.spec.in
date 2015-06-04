@@ -22,6 +22,9 @@
 %if 0%{?fedora} || 0%{?rhel} >= 7 || 0%{?suse_version}
   %global _with_systemd 1
 %endif
+%if 0%{?rhel} == 6
+  %global init_system sysV
+%endif
 
 #################################################################################
 # common
@@ -556,13 +559,34 @@ make DESTDIR=$RPM_BUILD_ROOT install
 find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name "*.a" -exec rm -f {} ';'
 install -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
+
 %if 0%{?_with_systemd}
+  mkdir -p $RPM_BUILD_ROOT%{_unitdir}
+  install -m 0644 -D systemd/ceph-osd@.service $RPM_BUILD_ROOT%{_unitdir}
+  install -m 0644 -D systemd/ceph-mds@.service $RPM_BUILD_ROOT%{_unitdir}
+  install -m 0644 -D systemd/ceph-mon@.service $RPM_BUILD_ROOT%{_unitdir}
+  install -m 0644 -D systemd/ceph-radosgw@.service $RPM_BUILD_ROOT%{_unitdir}
+  install -m 0644 -D systemd/ceph.target $RPM_BUILD_ROOT%{_unitdir}
+  mkdir -p $RPM_BUILD_ROOT/usr/lib/ceph-radosgw/
+  install -m 0755 -D src/ceph-radosgw-prestart.sh $RPM_BUILD_ROOT/usr/lib/ceph-radosgw/
+  install -m 0755 -D systemd/ceph %{buildroot}/%{_sbindir}/rcceph
   install -m 0644 -D systemd/ceph.tmpfiles.d $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf
   install -m 0644 -D systemd/ceph-rgw.tmpfiles.d $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}-rgw.conf
 %endif
-mkdir -p $RPM_BUILD_ROOT%{_sbindir}
-ln -sf ../../etc/init.d/ceph %{buildroot}/%{_sbindir}/rcceph
-ln -sf ../../etc/init.d/ceph-radosgw %{buildroot}/%{_sbindir}/rcceph-radosgw
+
+%if 0%{?init_system} = sysV
+  install -D src/init-ceph $RPM_BUILD_ROOT%{_initrddir}/ceph
+  install -D src/init-radosgw $RPM_BUILD_ROOT%{_initrddir}/ceph-radosgw
+  install -D src/init-rbdmap $RPM_BUILD_ROOT%{_initrddir}/rbdmap
+  install -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
+  mkdir -p $RPM_BUILD_ROOT%{_sbindir}
+  ln -sf ../../etc/init.d/ceph %{buildroot}/%{_sbindir}/rcceph
+  ln -sf ../../etc/init.d/ceph-radosgw %{buildroot}/%{_sbindir}/rcceph-radosgw
+%endif
+
+
+
+
 install -m 0644 -D src/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/ceph
 install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/radosgw
 chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.ceph.conf
@@ -659,7 +683,8 @@ mkdir -p %{_localstatedir}/run/ceph/
       /usr/bin/systemctl stop $SERVICE > /dev/null 2>&1 || :
     done
   fi
-%else
+%endif
+%if 0%{?init_system} = sysV
   %if 0%{?opensuse} || 0%{?suse_version}
     %stop_on_removal ceph
   %endif
@@ -715,6 +740,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_unitdir}/ceph-mds@.service
 %{_unitdir}/ceph.target
 %else
+%if 0%{?init_system} = sysV
 %{_initrddir}/ceph
 %{_initrddir}/rbdmap
 %endif
@@ -815,6 +841,14 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_bindir}/rbd
 %{_bindir}/ceph-post-file
 %{_bindir}/ceph-brag
+%if 0%{?_with_systemd}
+%dir /usr/lib/ceph
+%{_libexecdir}/ceph/ceph-osd-prestart.sh
+%{_unitdir}/ceph-osd@.service
+%{_unitdir}/ceph-mon@.service
+%{_unitdir}/ceph-mds@.service
+%{_unitdir}/ceph.target
+%endif
 %{_mandir}/man8/ceph-authtool.8*
 %{_mandir}/man8/ceph-conf.8*
 %{_mandir}/man8/ceph-dencoder.8*
@@ -840,6 +874,8 @@ mkdir -p %{_localstatedir}/run/ceph/
 %else
 /lib/udev/rules.d/50-rbd.rules
 %endif
+
+
 
 %postun -n ceph-common
 # Package removal cleanup
