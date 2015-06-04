@@ -1247,6 +1247,52 @@ AC_ARG_WITH(
     ]
 )
 
+dnl CEPH_GIT_VER
+AC_SUBST(ceph_git_ver)
+AC_ARG_WITH(
+    ceph-git-ver,
+    AS_HELP_STRING(
+        [--with-ceph-git-ver=CEPH_GIT_VER],
+        [Versioning information]
+    ),
+    [
+        ceph_git_ver="$withval"
+    ],
+    [
+        if test "x$CEPH_GIT_VER" = "x"; then
+            ./src/make_version -c /dev/null -g sillyfifo
+            ceph_git_ver=$(head -n 1 sillyfifo)
+            ceph_git_nice_ver=$(tail -n 1 sillyfifo)
+            rm sillyfifo
+        else
+            ceph_git_ver="$CEPH_GIT_VER"
+        fi
+    ]
+)
+
+
+dnl CEPH_GIT_NICE_VER
+AC_SUBST(ceph_git_nice_ver)
+AC_ARG_WITH(
+    ceph-git-nice-ver,
+    AS_HELP_STRING(
+        [--with-ceph-git-nice-ver=CEPH_GIT_NICE_VER],
+        [Versioning information]
+    ),
+    [
+        ceph_git_nice_ver="$withval"
+    ],
+    [
+        if test "x$CEPH_GIT_NICE_VER" = "x"; then
+            ./src/make_version -c /dev/null -g sillyfifo
+            ceph_git_ver=$(head -n 1 sillyfifo)
+            ceph_git_nice_ver=$(tail -n 1 sillyfifo)
+            rm sillyfifo
+        else
+            ceph_git_nice_ver="$CEPH_GIT_NICE_VER"
+        fi
+    ]
+)
 
 # Checks for typedefs, structures, and compiler characteristics.
 #AC_HEADER_STDBOOL
@@ -1302,6 +1348,7 @@ AM_PATH_PYTHON([2.4],
 
 AC_CONFIG_HEADERS([src/acconfig.h])
 AC_CONFIG_FILES([Makefile
+	src/ceph_ver.h
 	src/Makefile
 	src/ocf/Makefile
 	src/ocf/ceph
