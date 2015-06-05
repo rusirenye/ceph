@@ -559,13 +559,10 @@ make -j$(getconf _NPROCESSORS_ONLN) check-local
 make DESTDIR=$RPM_BUILD_ROOT install
 find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name "*.a" -exec rm -f {} ';'
-install -D src/init-ceph $RPM_BUILD_ROOT%{_initrddir}/ceph
-install -D src/init-radosgw $RPM_BUILD_ROOT%{_initrddir}/ceph-radosgw
 install -D src/init-rbdmap $RPM_BUILD_ROOT%{_initrddir}/rbdmap
 install -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
 %if 0%{?_with_systemd}
   install -m 0644 -D systemd/ceph.tmpfiles.d $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf
-  install -m 0644 -D systemd/ceph-rgw.tmpfiles.d $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}-rgw.conf
   mkdir -p $RPM_BUILD_ROOT%{_unitdir}
   install -m 0644 -D systemd/ceph-osd@.service $RPM_BUILD_ROOT%{_unitdir}
   install -m 0644 -D systemd/ceph-mds@.service $RPM_BUILD_ROOT%{_unitdir}
@@ -576,8 +573,7 @@ install -D src/rbdmap $RPM_BUILD_ROOT%{_sysconfdir}/ceph/rbdmap
   install -m 0755 -D src/ceph-radosgw-prestart.sh $RPM_BUILD_ROOT/usr/lib/ceph-radosgw/
   install -m 0755 -D systemd/ceph %{buildroot}/%{_sbindir}/rcceph
   install -m 0644 -D systemd/tmpfiles.d_ceph.conf $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf
-  install -m 0644 -D systemd/tmpfiles.d_ceph-rgw.conf $RPM_BUILD_ROOT%{_tmpfilesdir}/ceph-radosgw.conf
-
+  install -m 0644 -D systemd/ceph-rgw.tmpfiles.d $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}-rgw.conf
 %else
   install -D src/init-ceph $RPM_BUILD_ROOT%{_initrddir}/ceph
   install -D src/init-radosgw $RPM_BUILD_ROOT%{_initrddir}/ceph-radosgw
@@ -609,14 +605,18 @@ install -m 0644 -D udev/95-ceph-osd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ce
 %if 0%{?rhel} >= 7 || 0%{?fedora}
 install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/50-rbd.rules
 install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
-%else
+%endif
+
+%if 0%{?rhel} < 7
 install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/50-rbd.rules
 install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 %endif
 
 %if (0%{?rhel} && 0%{?rhel} < 7)
 install -m 0644 -D udev/95-ceph-osd-alt.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
-%else
+%endif
+
+%if 0%{?rhel} < 7
 install -m 0644 -D udev/95-ceph-osd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
 %endif
 
@@ -925,7 +925,7 @@ fi
 /sbin/ldconfig
 %if 0%{?_with_systemd}
   # TODO: find out what exactly this systemd-tmpfiles inovcation is for
-  systemd-tmpfiles --create /%{_tmpfilesdir}/ceph-radosgw.conf
+  systemd-tmpfiles --create /%{_tmpfilesdir}/ceph-rgw.conf
   # explicit systemctl daemon-reload (that's the only relevant bit of
   # service_add_post; the rest is all sysvinit --> systemd migration which
   # isn't applicable in this context (see above comment).
