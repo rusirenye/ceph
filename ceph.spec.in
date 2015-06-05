@@ -931,17 +931,18 @@ fi
 %{_mandir}/man8/radosgw-admin.8*
 %config(noreplace) %{_sysconfdir}/logrotate.d/radosgw
 %config %{_sysconfdir}/bash_completion.d/radosgw-admin
+%if 0%{?_with_systemd}
+%{_tmpfilesdir}/%{name}-radosgw.conf
+%dir %{_tmpfilesdir}/
+%{_unitdir}/ceph-radosgw@.service
+%dir /usr/lib/ceph-radosgw
+/usr/lib/ceph-radosgw/ceph-radosgw-prestart.sh
+%endif
+%if 0%{?_with_sysvinit}
 %dir %{_localstatedir}/log/radosgw/
 %dir %{_localstatedir}/lib/ceph/radosgw
-%if 0%{?_with_systemd}
-  %{_tmpfilesdir}/%{name}-radosgw.conf
-  %dir %{_tmpfilesdir}/
-  %{_unitdir}/ceph-radosgw@.service
-  %dir /usr/lib/ceph-radosgw
-  /usr/lib/ceph-radosgw/ceph-radosgw-prestart.sh
-%else
-  %{_initrddir}/ceph-radosgw
-  %{_sbindir}/rcceph-radosgw
+%{_initrddir}/ceph-radosgw
+%{_sbindir}/rcceph-radosgw
 %endif
 
 %post radosgw
