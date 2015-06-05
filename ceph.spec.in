@@ -795,15 +795,17 @@ mkdir -p %{_localstatedir}/run/ceph/
 %dir %{_libdir}/ceph/erasure-code
 %{_libdir}/ceph/erasure-code/libec_*.so*
 
+# udev rules
 %if 0%{?debian}
 /lib/udev/rules.d/50-rbd.rules
 %endif
 %if 0%{?rhel} >= 7 || 0%{?fedora}
 /usr/lib/udev/rules.d/50-rbd.rules
-%endif
-%if 0%{?rhel} >= 7 || 0%{?fedora}
 /usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 /usr/lib/udev/rules.d/95-ceph-osd.rules
+%endif
+%if (0%{?rhel} > 0 && 0%{?rhel} < 7)
+/lib/udev/rules.d/95-ceph-osd.rules
 %endif
 %if 0%{?opensuse} || 0%{?suse_version}
 /usr/lib/udev/rules.d/95-ceph-osd.rules
