@@ -159,9 +159,11 @@ Requires:  python-argparse
 %endif
 %if 0%{?rhel} || 0%{?fedora}
 Requires:	redhat-lsb-core
+BuildRequires:	redhat-lsb-core
 %endif
 %if 0%{defined suse_version}
 Requires:	lsb-release
+BuildRequires:	lsb-release
 %endif
 %description -n ceph-common
 Common utilities to mount and interact with a ceph storage cluster.
