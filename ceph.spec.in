@@ -784,6 +784,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %endif
 %if 0%{?opensuse} || 0%{?suse_version}
 /usr/lib/udev/rules.d/95-ceph-osd.rules
+%{_sbindir}/mount.ceph
 %endif
 %config %{_sysconfdir}/bash_completion.d/ceph
 %config(noreplace) %{_sysconfdir}/logrotate.d/ceph
