@@ -98,17 +98,16 @@ BuildRequires:	snappy-devel
 #################################################################################
 # specific
 #################################################################################
-%if ! 0%{?rhel} || 0%{?fedora}
-BuildRequires:	sharutils
+%if 0%{?rhel} || 0%{?centos} || 0%{?fedora}
+BuildRequires:  bzip2-devel
 %endif
-
 %if 0%{defined suse_version}
 BuildRequires:	python-sphinx
 BuildRequires:	net-tools
 BuildRequires:	libbz2-devel
 BuildRequires:	sharutils
 BuildRequires:	git
-%if 0%{?suse_version} > 1210
+%if 0%{?_with_systemd}
 Requires:	gptfdisk
 %if 0%{with tcmalloc}
 BuildRequires:	gperftools-devel
@@ -123,8 +122,9 @@ BuildRequires:	mozilla-nss-devel
 BuildRequires:	keyutils-devel
 BuildRequires:	libatomic-ops-devel
 BuildRequires:	fdupes
-%else
-BuildRequires:  bzip2-devel
+%endif
+%if 0%{?_with_sysvinit}
+Requires:	gdisk
 BuildRequires:	nss-devel
 BuildRequires:	keyutils-libs-devel
 BuildRequires:	libatomic_ops-devel
