@@ -646,9 +646,8 @@ install -m 0644 -D udev/95-ceph-osd-alt.rules $RPM_BUILD_ROOT/lib/udev/rules.d/9
 
 #set up placeholder directories
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ceph
-%if (0%{?rhel} || 0%{?fedora})
+%if 0%{?_with_sysvinit}
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/run/ceph
-%endif
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/ceph
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/tmp
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/mon
@@ -659,6 +658,7 @@ mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/bootstrap-osd
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/bootstrap-mds
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/bootstrap-rgw
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/radosgw
+%endif
 
 %if 0%{?opensuse} || 0%{?suse_version}
 # Fedora seems to have some problems with this macro, use it only on SUSE
@@ -842,6 +842,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ceph-clsinfo.8*
 %{_mandir}/man8/librados-config.8*
 #set up placeholder directories
+%if 0%{?_with_sysvinit}
 %dir %{_localstatedir}/lib/ceph/
 %dir %{_localstatedir}/lib/ceph/tmp
 %dir %{_localstatedir}/lib/ceph/mon
@@ -851,6 +852,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/lib/ceph/bootstrap-mds
 %dir %{_localstatedir}/lib/ceph/bootstrap-rgw
 %dir %{_localstatedir}/run/ceph/
+%endif
+
 %if 0%{?opensuse} || 0%{?suse_version}
 %dir %{_tmpfilesdir}/
 %{_tmpfilesdir}/%{name}.conf
