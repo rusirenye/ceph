@@ -643,7 +643,9 @@ install -m 0644 -D systemd/udev-rules.d-95-ceph-osd.rules $RPM_BUILD_ROOT/usr/li
 
 #set up placeholder directories
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ceph
+%if (0%{?rhel} || 0%{?fedora})
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/run/ceph
+%endif
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/ceph
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/tmp
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/ceph/mon
