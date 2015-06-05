@@ -754,7 +754,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_sbindir}/ceph-disk-udev
 %{_sbindir}/ceph-create-keys
 %{_sbindir}/rcceph
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} >= 7 || 0%{?fedora} > 20
 %{_sbindir}/mount.ceph
 %else
 /sbin/mount.ceph
