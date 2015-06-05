@@ -605,8 +605,8 @@ install -m 0644 -D etc/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds %{buildro
 
 %if 0%{defined suse_version}
 install -m 0644 -D udev/95-ceph-osd.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
-mv $RPM_BUILD_ROOT/sbin/mount.ceph $RPM_BUILD_ROOT/usr/sbin/mount.ceph
-mv $RPM_BUILD_ROOT/sbin/mount.fuse.ceph $RPM_BUILD_ROOT/usr/sbin/mount.fuse.ceph
+install -m 0755 -D $RPM_BUILD_ROOT/sbin/mount.ceph $RPM_BUILD_ROOT/%{_sbindir}/mount.ceph
+install -m 0755 -D $RPM_BUILD_ROOT/sbin/mount.fuse.ceph $RPM_BUILD_ROOT/%{_sbindir}/mount.fuse.ceph
 %endif
 
 
