@@ -772,7 +772,10 @@ mkdir -p %{_localstatedir}/run/ceph/
 %dir %{_libdir}/ceph/erasure-code
 %{_libdir}/ceph/erasure-code/libec_*.so*
 
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} >= 7
+/usr/lib/udev/rules.d/50-rbd.rules
+%endif
+%if 0%{?fedora} > 20
 /usr/lib/udev/rules.d/50-rbd.rules
 %endif
 %if (0%{?rhel} && 0%{?rhel} < 7)
