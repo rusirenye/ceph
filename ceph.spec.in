@@ -815,6 +815,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %if (0%{?opensuse} || 0%{?suse_version})
 /usr/lib/udev/rules.d/95-ceph-osd.rules
+%{_sbindir}/mount.ceph
 %endif
 
 %config %{_sysconfdir}/bash_completion.d/ceph
