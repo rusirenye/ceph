@@ -607,8 +607,9 @@ install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotat
   install -m 0755 -D systemd/ceph %{buildroot}/%{_sbindir}/rcceph
   install -m 0644 -D systemd/tmpfiles.d_ceph.conf $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf
   install -m 0644 -D systemd/tmpfiles.d_ceph-rgw.conf $RPM_BUILD_ROOT%{_tmpfilesdir}/ceph-radosgw.conf
+%endif
 
-%else
+%if 0%{?_with_sysvinit}
   install -D src/init-ceph $RPM_BUILD_ROOT%{_initrddir}/ceph
   install -D src/init-radosgw $RPM_BUILD_ROOT%{_initrddir}/ceph-radosgw
   install -D src/init-rbdmap $RPM_BUILD_ROOT%{_initrddir}/rbdmap
@@ -617,6 +618,7 @@ install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotat
   ln -sf ../../etc/init.d/ceph %{buildroot}/%{_sbindir}/rcceph
   ln -sf ../../etc/init.d/ceph-radosgw %{buildroot}/%{_sbindir}/rcceph-radosgw
 %endif
+
 mkdir -p $RPM_BUILD_ROOT%{_sbindir}
 install -m 0644 -D src/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/ceph
 install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/radosgw
@@ -630,10 +632,12 @@ install -m 0644 -D etc/sysconfig/SuSEfirewall2.d/services/ceph-osd-mds %{buildro
 %endif
 
 # udev rules
-%if (0%{?rhel} >= 7 || 0%{?fedora})
+%if (0%{?rhel} > 6 || 0%{?fedora})
 install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/50-rbd.rules
 install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
-%elif (0%{?rhel} > 0 && 0%{?rhel} < 7)
+%endif
+
+%if (0%{?rhel} > 0 && 0%{?rhel} < 7)
 install -m 0644 -D udev/95-ceph-osd-alt.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
 %endif
 
@@ -686,8 +690,9 @@ rm -rf $RPM_BUILD_ROOT
   %endif
 %else
   /sbin/chkconfig --add ceph
+  mkdir -p %{_localstatedir}/run/ceph/
 %endif
-mkdir -p %{_localstatedir}/run/ceph/
+
 
 %preun
 %if 0%{?_with_systemd}
@@ -763,7 +768,8 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_unitdir}/ceph-mon@.service
 %{_unitdir}/ceph-mds@.service
 %{_unitdir}/ceph.target
-%else
+%endif
+%if 0%{?_with_sysvinit}
 %{_initrddir}/ceph
 %{_initrddir}/rbdmap
 %endif
@@ -775,8 +781,9 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_sbindir}/rcceph
 %if 0%{?rhel} >= 7 || 0%{?fedora}
 %{_sbindir}/mount.ceph
-%else
-/sbin/mount.ceph
+%endif
+%if (0%{?rhel} > 0 && 0%{?rhel} < 7)
+%{_sbindir}/mount.ceph
 %endif
 %dir %{_libdir}/ceph
 %{_libdir}/ceph/ceph_common.sh
@@ -796,20 +803,21 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_libdir}/ceph/erasure-code/libec_*.so*
 
 # udev rules
-%if 0%{?debian}
-/lib/udev/rules.d/50-rbd.rules
-%endif
+
 %if 0%{?rhel} >= 7 || 0%{?fedora}
 /usr/lib/udev/rules.d/50-rbd.rules
 /usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 /usr/lib/udev/rules.d/95-ceph-osd.rules
 %endif
+
 %if (0%{?rhel} > 0 && 0%{?rhel} < 7)
 /lib/udev/rules.d/95-ceph-osd.rules
 %endif
-%if 0%{?opensuse} || 0%{?suse_version}
+
+%if (0%{?opensuse} || 0%{?suse_version})
 /usr/lib/udev/rules.d/95-ceph-osd.rules
 %endif
+
 %config %{_sysconfdir}/bash_completion.d/ceph
 %config(noreplace) %{_sysconfdir}/logrotate.d/ceph
 %if 0%{?opensuse} || 0%{?suse_version}
