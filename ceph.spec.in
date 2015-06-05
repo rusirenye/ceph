@@ -134,6 +134,7 @@ BuildRequires:	fdupes
 Requires:	gdisk
 BuildRequires:	nss-devel
 BuildRequires:	keyutils-libs-devel
+Requires:	keyutils
 BuildRequires:	libatomic_ops-devel
 Requires:	gdisk
 Requires(post):	chkconfig
