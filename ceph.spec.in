@@ -663,6 +663,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %docdir %{_docdir}
 %dir %{_docdir}/ceph
 %dir /usr/share/ceph
+%{_docdir}/ceph/README.SUSE
 %{_docdir}/ceph/sample.ceph.conf
 %{_docdir}/ceph/sample.fetch_config
 %{_bindir}/cephfs
