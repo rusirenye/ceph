@@ -129,7 +129,7 @@ Recommends:	logrotate
 BuildRequires:	%insserv_prereq
 BuildRequires:	mozilla-nss-devel
 BuildRequires:	keyutils-devel
-BuildRequires:	libatomic-ops-devel
+BuildRequires:	libatomic_ops-devel
 BuildRequires:	fdupes
 %endif
 
