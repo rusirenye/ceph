@@ -548,6 +548,9 @@ install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotat
 mkdir -p $RPM_BUILD_ROOT%{_sbindir}
 install -m 0644 -D src/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/ceph
 install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/radosgw
+%if 0%{?suse_version}
+install -m 0644 -D README.SUSE.v0.2 $RPM_BUILD_ROOT%{_docdir}/ceph/README.SUSE
+%endif
 chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.ceph.conf
 chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.fetch_config
 
