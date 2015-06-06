@@ -779,7 +779,9 @@ mkdir -p %{_localstatedir}/run/ceph/
 %endif
 %if 0%{defined suse_version}
 %{_sbindir}/mount.ceph
-#/usr/lib/udev/rules.d/95-ceph-osd.rules
+/lib/udev/rules.d/95-ceph-osd.rules
+/usr/sbin/mount.fuse.ceph
+
 %endif
 %config %{_sysconfdir}/bash_completion.d/ceph
 %config(noreplace) %{_sysconfdir}/logrotate.d/ceph
