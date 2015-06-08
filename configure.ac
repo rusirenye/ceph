@@ -1203,6 +1203,83 @@ AC_ARG_WITH(
         fi
     ]
 )
+dnl init_sys
+AC_SUBST(init_sys)
+AC_SUBST(init_sys_systemd)
+AC_SUBST(init_sys_sysvinit)
+
+AC_ARG_WITH(
+    init-sys,
+    AS_HELP_STRING(
+	    [--with-init-sys=CEPH_INIT_CHOICE],
+	    ["systemd" "sysvinit"
+        defaults to src/]
+    ),
+    [
+	    init_sys="$withval"
+    ],
+    [
+        if test "x$CEPH_INIT_CHOICE" = "x"; then
+            init_sys="systemd"
+        else
+            init_sys="$CEPH_INIT_CHOICE"
+        fi
+    ]
+)
+
+if test "x$init_sys" = "xsystemd"; then
+init_sys_systemd=1
+init_sys_sysvinit=0
+AC_CONFIG_SUBDIRS([systemd])
+fi
+
+
+if test "x$init_sys" = "xsysvinit"; then
+init_sys_systemd=0
+init_sys_sysvinit=1
+fi
+AC_SUBST(init_systemd_unitdir)
+AC_ARG_WITH(
+    systemd-unitdir,
+    AS_HELP_STRING(
+	    [--with-systemd-unitdir=CEPH_INIT_CHOICE],
+	    ["systemd" "sysvinit"
+        defaults to src/]
+    ),
+    [
+	    init_systemd_unitdir="$withval"
+    ],
+    [
+        if test "x$CEPH_INIT_CHOICE" = "x"; then
+            init_systemd_unitdir="/usr/lib/systemd/system/"
+        else
+            init_systemd_unitdir="$CEPH_INIT_CHOICE"
+        fi
+    ]
+)
+
+AC_SUBST(init_systemd_tmpfilesdir)
+AC_ARG_WITH(
+    systemd-tmpfilesdir,
+    AS_HELP_STRING(
+	    [--with-systemd-tmpfilesdir=CEPH_INIT_CHOICE],
+	    ["systemd" "sysvinit"
+        defaults to src/]
+    ),
+    [
+	    init_systemd_tmpfilesdir="$withval"
+    ],
+    [
+        if test "x$CEPH_INIT_CHOICE" = "x"; then
+            init_systemd_tmpfilesdir="/usr/lib/systemd/system/"
+        else
+            init_systemd_tmpfilesdir="$CEPH_INIT_CHOICE"
+        fi
+    ]
+)
+
+
+
 
 # Checks for typedefs, structures, and compiler characteristics.
 #AC_HEADER_STDBOOL
@@ -1266,6 +1343,7 @@ AC_CONFIG_FILES([Makefile
 	src/tracing/Makefile
 	man/Makefile
 	doc/Makefile
+    systemd/Makefile
 	systemd/ceph-osd@.service
 	ceph.spec])
 AC_OUTPUT

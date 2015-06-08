@@ -2,8 +2,8 @@ AUTOMAKE_OPTIONS = gnu
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = autogen.sh ceph.spec.in ceph.spec install-deps.sh
 # the "." here makes sure check-local builds gtest and gmock before they are used
-SUBDIRS = . src man doc
-
+SUBDIRS = . src man doc systemd
+AUX_DIST = ceph.spec
 EXTRA_DIST += \
 	src/test/run-cli-tests \
 	src/test/run-cli-tests-maybe-unset-ccache \
@@ -17,6 +17,10 @@ EXTRA_DIST += \
 	share/known_hosts_drop.ceph.com \
 	share/id_dsa_drop.ceph.com \
 	share/id_dsa_drop.ceph.com.pub
+
+
+MAINTAINERCLEANFILES = Makefile.in
+
 
 # why is it so hard to make autotools to this?
 install-data-local::
@@ -86,3 +90,6 @@ dist-hook:
 	  cd $(srcdir); \
 	  git log --oneline --decorate --no-merges > $(distdir)/ChangeLog; \
 	fi
+	for file in $(AUX_DIST) $(AUX_DIST_EXTRA); do \
+	  cp $$file $(distdir)/$$file; \
+	done
