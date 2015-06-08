@@ -771,6 +771,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_mandir}/man8/ceph-debugpack.8*
 %{_mandir}/man8/ceph-clsinfo.8*
 %{_mandir}/man8/librados-config.8*
+%_mandir/*/*
 #set up placeholder directories
 %dir %{_localstatedir}/lib/ceph/
 %dir %{_localstatedir}/lib/ceph/tmp
