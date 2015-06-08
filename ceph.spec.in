@@ -69,6 +69,7 @@ BuildRequires:  bzip2-devel
 BuildRequires: keyutils-libs-devel
 BuildRequires:	nss-devel
 BuildRequires:	gperftools-devel
+BuildRequires:	libatomic_ops-devel
 %endif
 BuildRequires:	cryptsetup
 BuildRequires:	gdbm
