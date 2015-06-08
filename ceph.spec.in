@@ -67,6 +67,7 @@ BuildRequires:  libbz2-devel
 %else
 BuildRequires:  bzip2-devel
 BuildRequires: keyutils-libs-devel
+BuildRequires:	nss-devel
 %endif
 BuildRequires:	cryptsetup
 BuildRequires:	gdbm
