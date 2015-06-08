@@ -98,6 +98,7 @@ BuildRequires:	xfsprogs
 BuildRequires:	xfsprogs-devel
 BuildRequires:	xmlstarlet
 BuildRequires:	yasm
+BuildRequires:	keyutils-devel
 %if 0%{?rhel} || 0%{?fedora} || 0%{?suse_version}
 BuildRequires:	snappy-devel
 %endif
@@ -129,7 +130,6 @@ BuildRequires:	google-perftools-devel
 Recommends:	logrotate
 BuildRequires:	%insserv_prereq
 BuildRequires:	mozilla-nss-devel
-BuildRequires:	keyutils-devel
 BuildRequires:	libatomic-ops-devel
 BuildRequires:	fdupes
 %else
