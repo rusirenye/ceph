@@ -92,10 +92,6 @@ BuildRequires:	snappy-devel
 #################################################################################
 # specific
 #################################################################################
-%if ! 0%{?rhel} || 0%{?fedora}
-BuildRequires:	sharutils
-%endif
-
 %if 0%{defined suse_version}
 BuildRequires:	python-sphinx
 BuildRequires:	net-tools
