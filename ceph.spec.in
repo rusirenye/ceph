@@ -53,13 +53,15 @@ Requires(post):	binutils
 %if 0%{?_with_systemd}
 Requires: systemd
 %endif
+%if 0%{with cephfs_java}
+BuildRequires: sharutils
+%endif
 BuildRequires:	gcc-c++
 BuildRequires:	boost-devel
 %if 0%{?suse_version}
 BuildRequires:  libbz2-devel
 BuildRequires:	python-sphinx
 BuildRequires: net-tools
-BuildRequires: sharutils
 %endif
 BuildRequires:	git
 BuildRequires:	cryptsetup
@@ -104,7 +106,6 @@ BuildRequires:	yasm
 # specific
 #################################################################################
 %if 0%{?fedora} || 0%{?rhel} || 0%{?centos}
-BuildRequires:	sharutils
 Requires:	gdisk
 BuildRequires:	nss-devel
 BuildRequires:	keyutils-libs-devel
