@@ -40,6 +40,10 @@ include test/Makefile.am
 include tools/Makefile.am
 include Makefile-rocksdb.am
 
+unitprefiles = \
+	ceph-osd-prestart.sh
+unitpredir = $(systemd_libexec_dir)
+EXTRA_DIST += $(unitprefiles)
 
 # shell scripts
 
