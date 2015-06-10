@@ -1,5 +1,5 @@
 %bcond_with ocf
-%bcond_with cephfs_java
+%bcond_without cephfs_java
 
 # suse OBS build hosts are memory-limited
 %if 0%{?jobs} > 6
