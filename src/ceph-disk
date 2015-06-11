@@ -1872,9 +1872,6 @@ def start_daemon(
                     ],
                 )
         elif os.path.exists(os.path.join(path, 'systemd')):
-            cname = ""
-            if cluster != "ceph":
-                cname = "%s-" % (cluster)
             command_check_call(
                 [
                     'systemctl',
