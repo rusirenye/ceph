@@ -728,22 +728,7 @@ fi
 %{_mandir}/man8/mount.ceph.8*
 %{_mandir}/man8/ceph-debugpack.8*
 %{_mandir}/man8/ceph-clsinfo.8*
-%{_mandir}/man8/ceph-deploy.8*
-%{_mandir}/man8/ceph-detect-init.8*
-%{_mandir}/man8/ceph-disk.8*
-%{_mandir}/man8/ceph-create-keys.8*
-%{_mandir}/man8/ceph-mon.8*
-%{_mandir}/man8/ceph-mds.8*
-%{_mandir}/man8/ceph-osd.8*
-%{_mandir}/man8/ceph-run.8*
-%{_mandir}/man8/ceph-rest-api.8*
-%{_mandir}/man8/crushtool.8*
-%{_mandir}/man8/osdmaptool.8*
-%{_mandir}/man8/monmaptool.8*
-%{_mandir}/man8/cephfs.8*
-%{_mandir}/man8/mount.ceph.8*
-%{_mandir}/man8/ceph-debugpack.8*
-%{_mandir}/man8/ceph-clsinfo.8*
+%{_mandir}/man8/librados-config.8*
 #set up placeholder directories
 %dir %{_localstatedir}/lib/ceph/
 %dir %{_localstatedir}/lib/ceph/tmp
@@ -872,7 +857,6 @@ fi
 %files -n librados2
 %defattr(-,root,root,-)
 %{_libdir}/librados.so.*
-%{_mandir}/man8/librados-config.8*
 
 %post -n librados2
 /sbin/ldconfig
