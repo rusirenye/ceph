@@ -491,6 +491,7 @@ done
 		--with-systemd-unit-dir=%_unitdir \
 %endif
 		--docdir=%{_docdir}/ceph \
+		--with-man-pages \
 		--mandir="%_mandir" \
 		--with-nss \
 		--without-cryptopp \
