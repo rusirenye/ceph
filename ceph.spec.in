@@ -139,7 +139,6 @@ BuildRequires:	libbz2-devel
 BuildRequires:	sharutils
 BuildRequires:	git
 
-%if 0%{?opensuse} || 0%{?suse_version}
 %if 0%{?_with_systemd}
 Requires:	gptfdisk
 %if 0%{with tcmalloc}
@@ -196,10 +195,13 @@ Requires:	redhat-lsb-core
 Requires:	redhat-lsb-core
 %endif
 %if 0%{defined suse_version}
+<<<<<<< HEAD
 Requires:	lsb
 %endif
 
 %if 0%{?opensuse} || 0%{?suse_version}
+=======
+>>>>>>> small fix to old value
 Requires:	lsb-release
 %endif
 # python-argparse is only needed in distros with Python 2.6 or lower
