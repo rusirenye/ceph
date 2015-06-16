@@ -92,7 +92,7 @@ BuildRequires:	python-requests
 BuildRequires:	python-sphinx10
 BuildRequires:  bzip2-devel
 %endif
-%if 0%{?fedora} || 0%{defined suse_version} || 0%{?rhel} >= 7 || 0%{?centos} >= 7
+%if 0%{?fedora} || 0%{defined suse_version}
 BuildRequires:	python-sphinx
 %endif
 
