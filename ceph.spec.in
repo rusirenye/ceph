@@ -84,7 +84,7 @@ BuildRequires:	python-requests
 %if ( 0%{?rhel} > 0 && 0%{?rhel} < 7 ) || ( 0%{?centos} > 0 && 0%{?centos} < 7 )
 BuildRequires:	python-sphinx10
 %endif
-%if 0%{?fedora} || 0%{defined suse_version}
+%if 0%{?fedora} || 0%{defined suse_version} || 0%{?rhel} > 7 || 0%{?centos} > 7
 BuildRequires:	python-sphinx
 %endif
 
