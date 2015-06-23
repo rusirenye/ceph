@@ -217,6 +217,7 @@ BuildRequires:	FastCGI-devel
 %if 0%{?rhel} || 0%{?fedora}
 BuildRequires:	expat-devel
 BuildRequires:	fcgi-devel
+Requires:	mailcap
 %endif
 %description radosgw
 This package is an S3 HTTP REST gateway for the RADOS object store. It
