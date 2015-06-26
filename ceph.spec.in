@@ -750,8 +750,8 @@ mkdir -p %{_localstatedir}/run/ceph/
 %{_bindir}/cephfs-table-tool
 %{_bindir}/ceph-debugpack
 %{_bindir}/ceph-coverage
-%if 0%{?_with_systemd}
 %dir /usr/lib/ceph
+%if 0%{?_with_systemd}
 %{_libexecdir}/ceph/ceph-osd-prestart.sh
 %{_unitdir}/ceph-osd@.service
 %{_unitdir}/ceph-mon@.service
