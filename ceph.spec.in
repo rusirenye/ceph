@@ -652,7 +652,7 @@ install -m 0644 -D udev/50-rbd.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/50-rbd
 install -m 0644 -D udev/60-ceph-partuuid-workaround.rules $RPM_BUILD_ROOT/usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 %endif
 
-%if (0%{?rhel} > 0 && 0%{?rhel} < 7)
+%if (0%{?fedora} == 20 || 0%{?rhel} == 6)
 install -m 0644 -D udev/95-ceph-osd-alt.rules $RPM_BUILD_ROOT/lib/udev/rules.d/95-ceph-osd.rules
 %endif
 
@@ -772,8 +772,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/cephfs-table-tool
 %{_bindir}/ceph-debugpack
 %{_bindir}/ceph-coverage
-%if 0%{?_with_systemd}
 %dir /usr/lib/ceph
+%if 0%{?_with_systemd}
 %{_libexecdir}/ceph/ceph-osd-prestart.sh
 %{_unitdir}/ceph-osd@.service
 %{_unitdir}/ceph-mon@.service
@@ -790,7 +790,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sbindir}/ceph-disk-udev
 %{_sbindir}/ceph-create-keys
 %{_sbindir}/rcceph
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} >= 7 || 0%{?fedora == 20}
 %{_sbindir}/mount.ceph
 %endif
 %if (0%{?rhel} > 0 && 0%{?rhel} < 7)
