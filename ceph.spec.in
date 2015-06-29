@@ -795,12 +795,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sbindir}/ceph-disk-udev
 %{_sbindir}/ceph-create-keys
 %{_sbindir}/rcceph
-%if 0%{?rhel} > 6 || 0%{?fedora == 20}
 %{_sbindir}/mount.ceph
-%endif
-%if 0%{?rhel == 6}
-%{_sbindir}/mount.ceph
-%endif
 %if (0%{?opensuse} || 0%{?suse_version})
 %{_sbindir}/mount.ceph
 /usr/sbin/mount.fuse.ceph
