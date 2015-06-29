@@ -844,7 +844,7 @@ mkdir -p %{_localstatedir}/run/ceph/
 %dir %{_localstatedir}/lib/ceph/bootstrap-mds
 %dir %{_localstatedir}/lib/ceph/bootstrap-rgw
 %dir %{_localstatedir}/run/ceph/
-%if 0%{?opensuse} || 0%{?suse_version}
+%if 0%{?_with_systemd}
 %dir %{_tmpfilesdir}/
 %{_tmpfilesdir}/%{name}.conf
 
@@ -907,10 +907,8 @@ fi
 %defattr(-,root,root,-)
 %{_bindir}/ceph-fuse
 %{_mandir}/man8/ceph-fuse.8*
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} >= 7 || 0%{?fedora} > 20
 %{_sbindir}/mount.fuse.ceph
-%else
-/sbin/mount.fuse.ceph
 %endif
 
 #################################################################################
