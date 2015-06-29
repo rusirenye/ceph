@@ -795,14 +795,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_sbindir}/ceph-disk-udev
 %{_sbindir}/ceph-create-keys
 %{_sbindir}/rcceph
-%if 0%{?rhel} >= 7 || 0%{?fedora == 20}
+%if 0%{?rhel} > 6 || 0%{?fedora == 20}
 %{_sbindir}/mount.ceph
 %endif
-%if (0%{?rhel} > 0 && 0%{?rhel} < 7)
+%if 0%{?rhel == 6}
 %{_sbindir}/mount.ceph
 %endif
 %if (0%{?opensuse} || 0%{?suse_version})
-/sbin/mount.ceph
+%{_sbindir}/mount.ceph
 /usr/sbin/mount.fuse.ceph
 %endif
 %dir %{_libdir}/ceph
@@ -824,7 +824,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # udev rules
 
-%if 0%{?rhel} >= 7 || 0%{?fedora}
+%if 0%{?rhel} > 6 || 0%{?fedora}
 /usr/lib/udev/rules.d/50-rbd.rules
 /usr/lib/udev/rules.d/60-ceph-partuuid-workaround.rules
 /usr/lib/udev/rules.d/95-ceph-osd.rules
@@ -836,7 +836,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %if (0%{?opensuse} || 0%{?suse_version})
 /usr/lib/udev/rules.d/95-ceph-osd.rules
-%{_sbindir}/mount.ceph
+
 %endif
 
 %config %{_sysconfdir}/bash_completion.d/ceph
@@ -1170,7 +1170,7 @@ ln -sf %{_libdir}/librbd.so.1 /usr/lib64/qemu/librbd.so.1
 %{_mandir}/man8/rbd-replay-prep.8*
 %{_bindir}/rbd-replay
 %{_bindir}/rbd-replay-many
-%if (0%{?fedora} || 0%{?rhel} == 6)
+%if (0%{?fedora} == 20 || 0%{?rhel} == 6 || 0%{?fedora} == 22)
 %{_bindir}/rbd-replay-prep
 %endif
 
