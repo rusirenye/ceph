@@ -539,9 +539,9 @@ install -m 0644 -D src/rgw/logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotat
   mkdir -p $RPM_BUILD_ROOT/usr/lib/ceph-radosgw/
   install -m 0755 -D src/ceph-radosgw-prestart.sh $RPM_BUILD_ROOT/usr/lib/ceph-radosgw/
   install -m 0755 -D systemd/ceph %{buildroot}/%{_sbindir}/rcceph
-  install -m 0644 -D systemd/tmpfiles.d_ceph.conf $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf
-  install -m 0644 -D systemd/tmpfiles.d_ceph-rgw.conf $RPM_BUILD_ROOT%{_tmpfilesdir}/ceph-radosgw.conf
-
+  install -d -m 0755 $RPM_BUILD_ROOT%{_tmpfilesdir}/
+  install -m 0644 systemd/ceph.tmpfiles.d $RPM_BUILD_ROOT%{_tmpfilesdir}/%{name}.conf
+  install -m 0644 systemd/tmpfiles.d_ceph-rgw.conf $RPM_BUILD_ROOT%{_tmpfilesdir}/ceph-radosgw.conf
 %else
   install -D src/init-ceph $RPM_BUILD_ROOT%{_initrddir}/ceph
   install -D src/init-radosgw $RPM_BUILD_ROOT%{_initrddir}/ceph-radosgw
