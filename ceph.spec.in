@@ -771,16 +771,10 @@ mkdir -p %{_localstatedir}/run/ceph/
 %dir %{_localstatedir}/lib/ceph/bootstrap-mds
 %dir %{_localstatedir}/lib/ceph/bootstrap-rgw
 %dir %{_localstatedir}/run/ceph/
-#
-# /etc/ceph and /var/log/ceph are included in ceph-common (see below)
-# but including them in ceph as well gets rid of an RPMLINT warning
-%dir %{_sysconfdir}/ceph/
-%dir %{_localstatedir}/log/ceph/
-#
+
 %if 0%{?suse_version}
 %dir %{_tmpfilesdir}/
 %{_tmpfilesdir}/%{name}.conf
-
 %else
 %ghost %dir %{_localstatedir}/run/ceph/
 %endif
