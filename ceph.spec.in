@@ -53,7 +53,7 @@ Requires:	util-linux
 Requires:	hdparm
 Requires:	cryptsetup
 Requires(post):	binutils
-# We require this to be present for %%{_tmpfilesdir}
+# We require this to be present for %{_tmpfilesdir}
 %if 0%{?_with_systemd}
 Requires: systemd
 %endif
