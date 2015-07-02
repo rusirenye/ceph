@@ -30,7 +30,9 @@
 Name:		ceph
 Version:	@VERSION@
 Release:	@RPM_RELEASE@%{?dist}
+%if ! 0%{?suse_version}
 Epoch:		1
+%endif
 Summary:	User space components of the Ceph file system
 License:	GPL-2.0
 Group:		System Environment/Base
