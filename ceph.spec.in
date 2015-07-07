@@ -1,3 +1,20 @@
+#
+# spec file for package ceph
+#
+# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
 %bcond_with ocf
 %bcond_without cephfs_java
 
@@ -22,6 +39,10 @@
 # /var/run/ceph.
 %if 0%{?fedora} || (0%{?rhel} && 0%{?rhel} >= 7) || (0%{?suse_version} && 0%{?suse_version} > 1300)
 %global _with_systemd 1
+%endif
+
+%if 0%{?suse_version}
+%debug_package
 %endif
 
 #################################################################################
@@ -459,10 +480,6 @@ This is a compatibility package to accommodate python-ceph split into
 python-rados, python-rbd and python-cephfs. Packages still depending on
 python-ceph should be fixed to depend on python-rados, python-rbd or
 python-cephfs instead.
-
-%if 0%{?suse_version}
-%debug_package
-%endif
 
 #################################################################################
 # common
