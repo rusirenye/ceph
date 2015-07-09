@@ -721,14 +721,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/ceph-coverage
 %{_initrddir}/ceph
 %if 0%{?_with_systemd}
+%dir /usr/lib/ceph
+%{_libexecdir}/ceph/ceph-osd-prestart.sh
+%{_unitdir}/ceph-osd@.service
+%{_unitdir}/ceph-mon@.service
+%{_unitdir}/ceph-mds@.service
+%{_unitdir}/ceph.target
 %{_tmpfilesdir}/%{name}.conf
+%else
+%{_sbindir}/rcceph
 %endif
 %{_sbindir}/ceph-disk
 %{_sbindir}/ceph-disk-activate
 %{_sbindir}/ceph-disk-prepare
 %{_sbindir}/ceph-disk-udev
 %{_sbindir}/ceph-create-keys
-%{_sbindir}/rcceph
 %if 0%{?rhel} >= 7 || 0%{?fedora}
 %{_sbindir}/mount.ceph
 %else
@@ -821,7 +828,9 @@ rm -rf $RPM_BUILD_ROOT
 %config %{_sysconfdir}/bash_completion.d/rados
 %config %{_sysconfdir}/bash_completion.d/rbd
 %config(noreplace) %{_sysconfdir}/ceph/rbdmap
+%if ! 0%{?_with_systemd}
 %{_initrddir}/rbdmap
+%endif
 %{python_sitelib}/ceph_argparse.py*
 %{_udevrulesdir}/50-rbd.rules
 
