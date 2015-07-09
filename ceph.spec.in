@@ -744,8 +744,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_tmpfilesdir}/%{name}.conf
 %else
 %{_initrddir}/ceph
-%{_sbindir}/rcceph
 %endif
+%{_sbindir}/rcceph
 %{_sbindir}/ceph-disk
 %{_sbindir}/ceph-disk-activate
 %{_sbindir}/ceph-disk-prepare
