@@ -688,6 +688,7 @@ rm -rf $RPM_BUILD_ROOT
   # /etc/systemd/system.  May as well stop them too for completeness
   # (although strictly service_del_preun would do that anyway by dint
   # of stopping ceph.target)
+  test -n "$FIRST_ARG" || FIRST_ARG=$1
   if [ $FIRST_ARG -eq 0 ]; then
     SERVICE_LIST=$(systemctl | grep -E '^ceph-mon@|^ceph-osd@|^ceph-mds@'  | cut -d' ' -f1)
     if [ -n "$SERVICE_LIST" ]; then
