@@ -50,7 +50,12 @@ Version:	@VERSION@
 Release:	@RPM_RELEASE@%{?dist}
 Summary:	User space components of the Ceph file system
 License:	GPL-2.0
+%if 0%{?fedora} || 0%{?rhel}
 Group:		System Environment/Base
+%endif
+%if 0%{?suse_version}
+Group:		System/Filesystems
+%endif
 URL:		http://ceph.com/
 Source0:	http://ceph.com/download/%{name}-%{version}.tar.bz2
 %if 0%{?fedora} || 0%{?rhel}
