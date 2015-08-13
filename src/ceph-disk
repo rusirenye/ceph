@@ -2014,7 +2014,7 @@ def main_prepare(args):
                 journal_uuid=journal_uuid,
                 journal_dmcrypt=journal_dmcrypt,
                 osd_key_path=args.dmcrypt_key_dir,
-                use_dmcrypt=bool(args.dmcrypt_key_dir),
+                use_dmcrypt=bool(args.dmcrypt),
                 cryptsetup_parameters=cryptsetup_parameters,
                 luks=luks
                 )
