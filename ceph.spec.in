@@ -616,7 +616,7 @@ chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.ceph.conf
 chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.fetch_config
 
 # give /usr/bin/radosgw the capability to bind to lower ports
-setcap cap_net_bind_service=+ep %{buildroot}/%{_bindir}/radosgw
+/sbin/setcap cap_net_bind_service=+ep %{buildroot}/%{_bindir}/radosgw
 
 # firewall templates
 %if 0%{?suse_version}
