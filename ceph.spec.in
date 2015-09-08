@@ -893,9 +893,7 @@ fi
 
 %post radosgw
 /sbin/ldconfig
-
-%preun radosgw
-%if 0%{?_with_systemd}
+%if 0%{?suse_version}
   # TODO: find out what exactly this systemd-tmpfiles inovcation is for
   systemd-tmpfiles --create %{_tmpfilesdir}/ceph-radosgw.conf
   # explicit systemctl daemon-reload (that's the only relevant bit of
@@ -909,9 +907,7 @@ fi
   SERVICE_LIST=$(systemctl | grep -E '^ceph-radosgw@'  | cut -d' ' -f1)
   if [ -n "$SERVICE_LIST" ]; then
     for SERVICE in $SERVICE_LIST; do
-      echo "disable $SERVICE"
       /usr/bin/systemctl --no-reload disable $SERVICE > /dev/null 2>&1 || :
-      echo "stop $SERVICE"
       /usr/bin/systemctl stop $SERVICE > /dev/null 2>&1 || :
     done
   fi
@@ -923,9 +919,7 @@ fi
   SERVICE_LIST=$(systemctl | grep -E '^ceph-radosgw@'  | cut -d' ' -f1)
   if [ -n "$SERVICE_LIST" ]; then
     for SERVICE in $SERVICE_LIST; do
-      echo "disable $SERVICE"
       /usr/bin/systemctl --no-reload disable $SERVICE > /dev/null 2>&1 || :
-      echo "stop $SERVICE"
       /usr/bin/systemctl try-restart $SERVICE > /dev/null 2>&1 || :
     done
   fi
