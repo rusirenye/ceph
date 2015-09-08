@@ -727,7 +727,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/cephfs-table-tool
 %{_bindir}/ceph-debugpack
 %{_bindir}/ceph-coverage
-%{_initrddir}/ceph
 %if 0%{?_with_systemd}
 %{_libexecdir}/ceph/ceph-osd-prestart.sh
 %{_unitdir}/ceph-osd@.service
