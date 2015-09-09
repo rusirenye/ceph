@@ -695,7 +695,7 @@ rm -rf $RPM_BUILD_ROOT
   %endif
 %endif
 
-%postun
+%postun -p /bin/bash
 /sbin/ldconfig
 %if 0%{?suse_version}
   # Restart on upgrade.
@@ -928,7 +928,7 @@ fi
   fi
 %endif
 
-%postun radosgw
+%postun radosgw -p /bin/bash
 /sbin/ldconfig
 %if 0%{?suse_version}
   # Restart on upgrade.
