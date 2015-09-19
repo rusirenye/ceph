@@ -139,7 +139,6 @@ BuildRequires:	%insserv_prereq
 BuildRequires:	mozilla-nss-devel
 BuildRequires:	keyutils-devel
 BuildRequires:	libatomic-ops-devel
-PreReq:         permissions
 %else
 BuildRequires:  bzip2-devel
 BuildRequires:	nss-devel
@@ -219,6 +218,7 @@ BuildRequires:	libexpat-devel
 BuildRequires:	FastCGI-devel
 BuildRequires:  openssl-devel
 Requires:       libopenssl1_0_0
+PreReq:         permissions
 %endif
 %if 0%{?rhel} || 0%{?fedora}
 BuildRequires:	expat-devel
