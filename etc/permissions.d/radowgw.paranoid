@@ -1,0 +1,2 @@
+/usr/bin/radosgw                                          root:root         0755
+ +capabilities cap_net_raw=ep
