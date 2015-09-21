@@ -918,7 +918,7 @@ fi
 %post radosgw
 /sbin/ldconfig
 %if 0%{?suse_version}
-  %set_permissions %{name}
+  %set_permissions %{_bindir}/radosgw
   # TODO: find out what exactly this systemd-tmpfiles inovcation is for
   systemd-tmpfiles --create %{_tmpfilesdir}/ceph-radosgw.conf
   # explicit systemctl daemon-reload (that's the only relevant bit of
