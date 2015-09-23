@@ -901,7 +901,6 @@ fi
 %config %{_sysconfdir}/bash_completion.d/radosgw-admin
 %config %{_sysconfdir}/permissions.d/radosgw.easy
 %config %{_sysconfdir}/permissions.d/radosgw.secure
-%config %{_sysconfdir}/permissions.d/radosgw.paranoid
 %dir %{_localstatedir}/log/radosgw/
 %dir %{_localstatedir}/lib/ceph/radosgw
 %if 0%{?_with_systemd}
