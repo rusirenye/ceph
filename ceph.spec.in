@@ -892,7 +892,8 @@ fi
 #################################################################################
 %files radosgw
 %defattr(-,root,root,-)
-%verify(not mode caps) %attr(0755,root,root) %{_bindir}/radosgw
+%attr(0750,wwwrun,www) %{_bindir}/radosgw
+%verify(not mode caps) %attr(0750,wwwrun,www) %{_bindir}/radosgw
 %{_bindir}/radosgw-admin
 %{_mandir}/man8/radosgw.8*
 %{_mandir}/man8/radosgw-admin.8*
