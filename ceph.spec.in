@@ -608,7 +608,6 @@ chmod 0644 $RPM_BUILD_ROOT%{_docdir}/ceph/sample.fetch_config
 %if 0%{?suse_version}
 install -m 0644 -D etc/permissions.d/radosgw.easy %{buildroot}%{_sysconfdir}/permissions.d/radosgw.easy
 install -m 0644 -D etc/permissions.d/radosgw.secure %{buildroot}%{_sysconfdir}/permissions.d/radosgw.secure
-install -m 0644 -D etc/permissions.d/radosgw.paranoid %{buildroot}%{_sysconfdir}/permissions.d/radosgw.paranoid
 %endif
 
 # firewall templates
