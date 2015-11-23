@@ -99,8 +99,8 @@ int main(int argc, const char **argv)
   char buf[128];
 
   time(&tm);
-  snprintf(buf, 128, "%s", ctime(&tm));
-  bl.append(buf, strlen(buf));
+  int len = snprintf(buf, 128, "%s", ctime(&tm));
+  bl.append(buf, len);
   blf.append(buf, 16);
 
   const char *oid = "bar";

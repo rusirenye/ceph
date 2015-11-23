@@ -1922,9 +1922,9 @@ TEST_P(StoreTest, OMapTest) {
     ASSERT_EQ(attrs.size(), cur_attrs.size());
 
     char buf[100];
-    snprintf(buf, sizeof(buf), "%d", i);
+    int len = snprintf(buf, sizeof(buf), "%d", i);
     bl.clear();
-    bufferptr bp(buf, strlen(buf) + 1);
+    bufferptr bp(buf, len + 1);
     bl.append(bp);
     map<string, bufferlist> to_add;
     to_add.insert(pair<string, bufferlist>("key-" + string(buf), bl));
@@ -2103,9 +2103,9 @@ TEST_P(StoreTest, OMapIterator) {
     iter = ObjectMap::ObjectMapIterator();
 
     char buf[100];
-    snprintf(buf, sizeof(buf), "%d", i);
+    int len = snprintf(buf, sizeof(buf), "%d", i);
     bl.clear();
-    bufferptr bp(buf, strlen(buf) + 1);
+    bufferptr bp(buf, len + 1);
     bl.append(bp);
     map<string, bufferlist> to_add;
     to_add.insert(pair<string, bufferlist>("key-" + string(buf), bl));

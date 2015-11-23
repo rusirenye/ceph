@@ -1268,8 +1268,9 @@ int FileStore::read_op_seq(uint64_t *seq)
 int FileStore::write_op_seq(int fd, uint64_t seq)
 {
   char s[30];
-  snprintf(s, sizeof(s), "%" PRId64 "\n", seq);
-  int ret = TEMP_FAILURE_RETRY(::pwrite(fd, s, strlen(s), 0));
+  int len = snprintf(s, sizeof(s), "%" PRId64 "\n", seq);
+  //assert( len > 0 && len < sizeof(s) );
+  int ret = TEMP_FAILURE_RETRY(::pwrite(fd, s, len, 0));
   if (ret < 0) {
     ret = -errno;
     assert(!m_filestore_fail_eio || ret != -EIO);

@@ -216,9 +216,9 @@ static int testrados(void)
 	time_t tm;
 	char buf[128], buf2[128];
 	time(&tm);
-	snprintf(buf, 128, "%s", ctime(&tm));
+	int len = snprintf(buf, 128, "%s", ctime(&tm));
 	const char *oid = "foo_object";
-	r = rados_write(io_ctx, oid, buf, strlen(buf) + 1, 0);
+	r = rados_write(io_ctx, oid, buf, len + 1, 0);
 	printf("rados_write = %d\n", r);
 	r = rados_read(io_ctx, oid, buf2, sizeof(buf2), 0);
 	printf("rados_read = %d\n", r);
