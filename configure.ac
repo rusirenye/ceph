@@ -1415,5 +1415,6 @@ AC_CONFIG_FILES([Makefile
 	man/Makefile
 	doc/Makefile
 	selinux/Makefile
+        systemd/ceph-osd@.service
 	ceph.spec])
 AC_OUTPUT

@@ -52,6 +52,7 @@ missing
 py-compile
 release
 stamp-h1
+systemd/ceph-sd@.service
 systemd/Makefile
 vgcore.*
 test-suite.log
