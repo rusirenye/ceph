@@ -251,7 +251,7 @@ unittest_str_list_LDADD = $(UNITTEST_LDADD) $(CEPH_GLOBAL)
 check_TESTPROGRAMS += unittest_str_list
 
 unittest_log_SOURCES = log/test.cc
-unittest_log_LDADD = $(LIBCOMMON) $(UNITTEST_LDADD)
+unittest_log_LDADD = $(LIBCOMMON) $(CRYPTO_LIBS) $(UNITTEST_LDADD)
 unittest_log_CXXFLAGS = $(UNITTEST_CXXFLAGS) -O2
 check_TESTPROGRAMS += unittest_log
 
