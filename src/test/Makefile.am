@@ -306,7 +306,7 @@ unittest_bufferlist_CXXFLAGS = $(UNITTEST_CXXFLAGS)
 check_TESTPROGRAMS += unittest_bufferlist
 
 unittest_xlist_SOURCES = test/test_xlist.cc
-unittest_xlist_LDADD = $(UNITTEST_LDADD) $(LIBCOMMON)
+unittest_xlist_LDADD = $(LIBCOMMON) $(CRYPTO_LIBS) $(UNITTEST_LDADD)
 unittest_xlist_CXXFLAGS = $(UNITTEST_CXXFLAGS)
 check_TESTPROGRAMS += unittest_xlist
 
