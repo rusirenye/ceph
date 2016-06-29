@@ -18,13 +18,12 @@
 %bcond_without tcmalloc
 %bcond_with lowmem_builder
 %bcond_with minimal_debugging_information
-%if 0%{?fedora} || 0%{?rhel}
 %bcond_without cephfs_java
+%if 0%{?fedora} || 0%{?rhel}
 %bcond_with ocf
 %bcond_without selinux
 %endif
 %if 0%{?suse_version}
-%bcond_with cephfs_java
 %bcond_without ocf
 %if %{with ocf}
 %global _with_ocf --with-ocf
