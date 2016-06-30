@@ -403,6 +403,7 @@ set(libcommon_files
   mon/MonCap.cc
   mon/MonClient.cc
   mon/MonMap.cc
+  mgr/MgrClient.cc
   msg/simple/Accepter.cc
   msg/DispatchQueue.cc
   msg/Message.cc
@@ -683,6 +684,24 @@ if (WITH_CEPHFS)
     DESTINATION bin)
 endif (WITH_CEPHFS)
 
+if (WITH_MGR)
+  set(mgr_srcs
+      ceph_mgr.cc
+      mgr/DaemonMetadata.cc
+      mgr/DaemonServer.cc
+      mgr/ClusterState.cc
+      mgr/PyModules.cc
+      mgr/PyFormatter.cc
+      mgr/PyState.cc
+      mgr/MgrPyModule.cc
+      mgr/Mgr.cc)
+  add_executable(ceph-mgr ${mgr_srcs}
+                 $<TARGET_OBJECTS:heap_profiler_objs>)
+             set_target_properties(ceph-mgr PROPERTIES COMPILE_FLAGS "-I${PYTHON_INCLUDE_DIRS}")
+  target_link_libraries(ceph-mgr mds osdc global
+      -lboost_python ${PYTHON_LIBRARIES} ${BLKID_LIBRARIES} ${CMAKE_DL_LIBS} ${TCMALLOC_LIBS})
+endif (WITH_MGR)
+
 set(librados_config_srcs
   librados-config.cc)
 add_executable(librados-config ${librados_config_srcs})
@@ -773,6 +792,7 @@ set(lib_mon_srcs
   mon/PaxosService.cc
   mon/OSDMonitor.cc
   mon/MDSMonitor.cc
+  mon/MgrMonitor.cc
   mon/MonmapMonitor.cc
   mon/LogMonitor.cc
   mon/AuthMonitor.cc
@@ -1529,6 +1549,7 @@ add_subdirectory(brag)
 add_custom_target(vstart DEPENDS
     ceph-osd
     ceph-mon
+    ceph-mgr
     ceph-authtool
     ceph-conf
     monmaptool
