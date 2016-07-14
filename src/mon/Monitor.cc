@@ -2469,6 +2469,10 @@ void Monitor::get_cluster_status(stringstream &ss, Formatter *f)
     f->open_object_section("fsmap");
     mdsmon()->fsmap.print_summary(f, NULL);
     f->close_section();
+
+    f->open_object_section("mgrmap");
+    mgrmon()->get_map().print_summary(f, nullptr);
+    f->close_section();
     f->close_section();
   } else {
     ss << "    cluster " << monmap->get_fsid() << "\n";
@@ -2479,6 +2483,11 @@ void Monitor::get_cluster_status(stringstream &ss, Formatter *f)
        << ", quorum " << get_quorum() << " " << get_quorum_names() << "\n";
     if (mdsmon()->fsmap.any_filesystems()) {
       ss << "      fsmap " << mdsmon()->fsmap << "\n";
+    }
+    if (mgrmon()->in_use()) {
+      ss << "        mgr ";
+      mgrmon()->get_map().print_summary(nullptr, &ss);
+      ss << "\n";
     }
 
     osdmon()->osdmap.print_summary(NULL, ss);
@@ -2801,6 +2810,11 @@ void Monitor::handle_command(MonOpRequestRef op)
 
   if (module == "config-key") {
     config_key_service->dispatch(op);
+    return;
+  }
+
+  if (module == "mgr") {
+    mgrmon()->dispatch(op);
     return;
   }
 
